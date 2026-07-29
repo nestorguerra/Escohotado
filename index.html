@@ -236,6 +236,7 @@ body.panelopen #minimap{opacity:.25}
 #coachok{font-family:var(--caps);font-size:12px;letter-spacing:.1em;color:#241C15;background:var(--gold);
   border:none;border-radius:2px;padding:11px 17px;cursor:pointer;min-height:40px}
 #coachok:hover{background:var(--gold-hi)}
+#coach[hidden]{display:none !important}/* el atributo hidden debe ganar al display:flex */
 
 /* --- panel de ficha ------------------------------------------------------ */
 #panel{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100vw;z-index:20;
@@ -644,8 +645,8 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   <div class="sub">Grabando el árbol…</div>
 </div>
 
-<script src="tree-data.js"></script>
-<script src="novel-data.js"></script>
+<script src="tree-data.js?v=1.2"></script>
+<script src="novel-data.js?v=1.2"></script>
 <script>
 'use strict';
 /* ================= utilidades ================= */
@@ -1255,8 +1256,8 @@ function buildHead(p,pid,forPrint){
     <div class="pname">${esc(p.name)}</div>`;
   if(p.altNames.length)h+=`<div style="font-style:italic;font-size:14px;color:var(--ink-3)">también ${esc(p.altNames.join(' · '))}</div>`;
   const vital=[];
-  if(p.birth&&(p.birth.text||p.birth.place))vital.push(`<span class="g">n.</span> ${esc(p.birth.text||'')}${p.birth.place?' · '+esc(p.birth.place):''}`);
-  if(p.death)vital.push(`<span class="g">†</span> ${esc(p.death.text||'fecha desconocida')}${p.death.place?' · '+esc(p.death.place):''}`);
+  if(p.birth&&(p.birth.text||p.birth.place))vital.push(`<span class="g">n.</span> ${[p.birth.text,p.birth.place].filter(Boolean).map(esc).join(' · ')}`);
+  if(p.death)vital.push(`<span class="g">†</span> ${[p.death.text||'fecha desconocida',p.death.place].filter(Boolean).map(esc).join(' · ')}`);
   if(vital.length)h+=`<div class="pvital">${vital.join('<br>')}</div>`;
   const kin=quickKin(p,pid);
   if(kin)h+=`<div class="pquick">${kin}</div>`;
@@ -1538,10 +1539,12 @@ function sourcesHTML(){
   list.map(s=>`<div class="src"><div class="st">${sealHTML(s.grade)}<div><div class="tt">${esc(s.title||'')}</div><div class="au">${esc([s.author,s.publication].filter(Boolean).join(' · '))}</div></div></div>${s.text?`<div class="tx">${esc(s.text)}</div>`:''}${s.urls.map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">Ver documento ${s.urls.length>1?j+1:''} ↗</a>`).join('')}</div>`).join('');
 }
 /* ================= edición, novedades y exportación ================= */
-const APP_META={version:'1.1',date:'29 de julio de 2026'};
+const APP_META={version:'1.2',date:'29 de julio de 2026'};
 $('#verline').textContent='edición '+APP_META.version+' · '+APP_META.date;
 function changelogHTML(){
   return `<p class="lead">Registro de cambios de esta edición digital.</p>
+  <h3>VERSIÓN 1.2 · 29 DE JULIO DE 2026</h3>
+  <p>Se incorpora Patti Lin, esposa de Aday Guerra Escohotado, por testimonio familiar directo (evidencia D) · corregido el cierre de la guía de tres pasos.</p>
   <h3>VERSIÓN 1.1 · 29 DE JULIO DE 2026</h3>
   <p>Navegación reorganizada con el selector Tronco / Colaterales y menú de información · fichas por pestañas (Resumen, Vida, Familia, Fuentes, Novela) con referencias de fuente en cada hecho · enlace directo copiable e impresión de fichas · navegación por rama en el móvil · leyenda compacta de evidencias y guía de tres pasos · años con horquilla visibles en los cartuchos («h. 1685», «1729–89») · exportación del lienzo en SVG · mejoras de accesibilidad (teclado, foco, contraste).</p>
   <h3>VERSIÓN 1.0 · 28 DE JULIO DE 2026</h3>
@@ -1623,7 +1626,7 @@ function renderBranch(pid){
     <div class="blabel">${genLab}</div>
     <div class="bn">${esc(p.given||p.name)}</div>
     <div class="bs">${esc((p.surname||'').toUpperCase())}</div>
-    <div class="by">${esc(yearsOf(p))}${p.birth&&p.birth.place?' · '+esc(p.birth.place):''}</div>
+    <div class="by">${[yearsOf(p),p.birth&&p.birth.place?esc(p.birth.place):''].filter(Boolean).join(' · ')}</div>
     ${p.occupations[0]?`<div class="bc">${esc(p.occupations[0])}</div>`:''}
   </div>
   <div class="bacts"><button class="pact" data-bficha="${pid}">Abrir ficha completa</button><button class="pact" data-blienzo="${pid}">Ver en el lienzo</button></div>`;
