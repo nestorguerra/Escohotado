@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Familia Escohotado</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23241C15'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='18' fill='%23C9A24A' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SISTEMA DE DISEÑO — «Grabado calcográfico, finales del XVIII»
+   Pergamino  #F3E9D2 / #E4D5B7   Tinta sepia #241C15 / #6B573D
+   Oro viejo  #C9A24A  hover #D4AF37  bronce #8C6D3F
+   Granate    #6B1E2B   Verde botánico #3E5641
+   Tipos: Libre Caslon Display (portada) · Cormorant Garamond
+   (nombres) · EB Garamond (cuerpo) · IM Fell English SC (rótulos)
+   Profundidad por trama de grabado, nunca por blur.
+   ============================================================ */
+:root{
+  --paper:#F3E9D2; --paper-2:#E9DCBE; --paper-3:#E4D5B7;
+  --ink:#241C15; --ink-2:#4A3B28; --ink-3:#6B573D; --ink-4:#8f7c60;
+  --gold:#C9A24A; --gold-hi:#D4AF37; --bronze:#8C6D3F;
+  --wine:#6B1E2B; --moss:#3E5641; --navy:#1B2A4A;
+  --gA:#9C7A2E; --gB:#3E5641; --gC:#8C5A33; --gD:#8D7455; --gE:#7D7668;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --body:'EB Garamond',Georgia,serif;
+  --caps:'IM Fell English SC',Georgia,serif;
+  --display:'Libre Caslon Display',Georgia,serif;
+  --fell:'IM Fell English',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--body);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+/* --- textura de pergamino + viñeta ------------------------------------ */
+#paper{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 40%, rgba(255,250,235,.55), rgba(0,0,0,0) 55%),
+    radial-gradient(ellipse 140% 120% at 50% 50%, rgba(0,0,0,0) 55%, rgba(120,90,40,.16) 88%, rgba(80,55,20,.28) 100%);
+}
+#paper::before{content:'';position:absolute;inset:0;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.14 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");}
+#paper::after{content:'';position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;
+  background:
+    radial-gradient(circle 260px at 12% 88%, rgba(140,109,63,.14), transparent 70%),
+    radial-gradient(circle 340px at 90% 10%, rgba(140,109,63,.12), transparent 70%),
+    radial-gradient(circle 200px at 78% 92%, rgba(107,30,43,.05), transparent 70%);}
+
+/* --- lienzo ------------------------------------------------------------ */
+#stage{position:fixed;inset:0;z-index:1;touch-action:none;cursor:grab;display:block;width:100%;height:100%}
+#stage.dragging{cursor:grabbing}
+#world text{user-select:none;-webkit-user-select:none}
+
+/* cartuchos */
+.card{cursor:pointer}
+.card .bg{fill:#F8F0DC;stroke:var(--ink-2);stroke-width:1.1}
+.card .inner{fill:none;stroke:var(--ink-3);stroke-width:.55;opacity:.85}
+.card .nm{font-family:var(--serif);font-weight:600;font-size:15.5px;fill:var(--ink)}
+.card .sn{font-family:var(--serif);font-weight:500;font-size:12.5px;fill:var(--ink-2);letter-spacing:.06em}
+.card .yr{font-family:var(--body);font-size:11px;fill:var(--ink-3);font-style:italic}
+.card .cap{font-family:var(--caps);font-size:9.5px;fill:var(--bronze);letter-spacing:.04em}
+.card .sprig{stroke:var(--bronze);fill:none;stroke-width:.9;opacity:.9}
+.card.consort .bg{fill:#F2E7CC;stroke:var(--ink-3);stroke-width:.9}
+.card.consort .nm{font-weight:500}
+.card.annexp .bg{fill:#EFE3C4;stroke-dasharray:none}
+.card .trace{fill:none;stroke:var(--gold-hi);stroke-width:1.6;opacity:0;
+  stroke-dasharray:100;stroke-dashoffset:100;pointer-events:none}
+.card:hover .trace{opacity:1;stroke-dashoffset:0;transition:stroke-dashoffset .55s cubic-bezier(.4,0,.2,1),opacity .15s}
+.card:hover .bg{stroke:var(--bronze)}
+.card.root .bg{fill:#F6ECCF;stroke:var(--gA);stroke-width:1.6}
+.card.root .inner{stroke:var(--gA);opacity:.9}
+.card.root .nm{font-size:17px}
+.laurel{stroke:var(--gA);fill:none;stroke-width:1;opacity:.95}
+.laurel .leaf{fill:#EBDCB4;stroke:var(--gA);stroke-width:.8}
+
+/* uniones y filiación */
+.link{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.link.gC{stroke:var(--ink-3);stroke-width:1.1}
+.link.gD{stroke:var(--ink-3);stroke-width:1.15;stroke-dasharray:7 5}
+.link.gE{stroke:var(--ink-4);stroke-width:1.1;stroke-dasharray:2 5;stroke-linecap:round}
+.tie{stroke:var(--ink-2);fill:none;stroke-width:1.15}
+.tieyr{font-family:var(--body);font-style:italic;font-size:9.5px;fill:var(--ink-3)}
+.famseal text{font-family:var(--caps);font-size:8.5px}
+.ulabel{font-family:var(--caps);font-size:8.5px;fill:var(--ink-3);letter-spacing:.05em}
+
+/* foco: línea de sucesión en oro, resto atenuado */
+#world.focus .card,#world.focus .link,#world.focus .tie,#world.focus .famseal,#world.focus .tieyr,#world.focus .ulabel{opacity:.18;transition:opacity .45s ease}
+#world.focus .card.lit,#world.focus .link.lit,#world.focus .tie.lit,#world.focus .famseal.lit{opacity:1}
+#world.focus .link.lit{stroke:var(--gA);stroke-width:2}
+#world.focus .card.lit .bg{stroke:var(--gA);stroke-width:1.5}
+#world .card,#world .link,#world .tie,#world .famseal,#world .tieyr,#world .ulabel{transition:opacity .45s ease}
+#selglow{fill:none;stroke:var(--gold-hi);stroke-width:2.4;opacity:0;pointer-events:none;transition:opacity .3s}
+#selglow.on{opacity:.95}
+
+/* anexo */
+.annexframe{fill:rgba(228,213,183,.45);stroke:var(--bronze);stroke-width:1.2}
+.annexframe2{fill:none;stroke:var(--bronze);stroke-width:.6;opacity:.8}
+.annexhdr{font-family:var(--caps);font-size:19px;fill:var(--wine);letter-spacing:.14em}
+.annexsub{font-family:var(--body);font-style:italic;font-size:12.5px;fill:var(--ink-3)}
+.annexgrp{font-family:var(--caps);font-size:11px;fill:var(--bronze);letter-spacing:.1em}
+
+/* --- animación de crecimiento ------------------------------------------ */
+@media (prefers-reduced-motion: no-preference){
+  #world.grow .card,#world.grow .tie,#world.grow .tieyr,#world.grow .famseal,#world.grow .ulabel,#world.grow .annex-el{
+    opacity:0;transform:translateY(14px);transform-box:fill-box;transform-origin:center}
+  #world.grow.grown .card,#world.grow.grown .tie,#world.grow.grown .tieyr,#world.grow.grown .famseal,#world.grow.grown .ulabel,#world.grow.grown .annex-el{
+    opacity:1;transform:none;transition:opacity .7s ease var(--d,0s),transform .7s cubic-bezier(.2,.7,.3,1) var(--d,0s)}
+  #world.grow .link{stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+  #world.grow.grown .link{stroke-dashoffset:0;opacity:1;
+    transition:stroke-dashoffset .9s cubic-bezier(.4,0,.3,1) var(--d,0s),opacity .3s ease var(--d,0s)}
+  #world.grow.grown .link.gD,#world.grow.grown .link.gE{transition:opacity .8s ease var(--d,0s);stroke-dashoffset:0}
+  #world.grow .link.gD,#world.grow .link.gE{stroke-dashoffset:0}
+}
+
+/* --- regla temporal ----------------------------------------------------- */
+#ruler{position:fixed;left:0;top:0;bottom:0;width:78px;height:100vh;z-index:4;pointer-events:none}
+#ruler .rbg{fill:url(#rulgrad)}
+#ruler .redge{stroke:var(--bronze);stroke-width:1}
+#ruler .tick{stroke:var(--ink-3);stroke-width:1}
+#ruler .tick.minor{stroke:var(--ink-4);stroke-width:.6}
+#ruler .tlab{font-family:var(--fell);font-size:11.5px;fill:var(--ink-2)}
+#ruler .gchip{fill:var(--paper-3);stroke:var(--bronze);stroke-width:.9}
+#ruler .glab{font-family:var(--caps);font-size:10.5px;fill:var(--wine)}
+
+/* --- cabecera ----------------------------------------------------------- */
+#chrome{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:14px;
+  padding:10px 18px 10px 96px;
+  background:linear-gradient(to bottom, rgba(243,233,210,.94), rgba(243,233,210,.82) 70%, rgba(243,233,210,0));
+  pointer-events:none}
+#chrome>*{pointer-events:auto}
+#wordmark{line-height:1.05;cursor:pointer;flex:0 0 auto}
+#wordmark .t{font-family:var(--caps);font-size:19px;letter-spacing:.22em;color:var(--ink)}
+#wordmark .t em{font-style:normal;color:var(--gold)}
+#wordmark .s{font-family:var(--body);font-style:italic;font-size:11.5px;color:var(--ink-3);letter-spacing:.05em}
+#searchwrap{position:relative;flex:0 1 320px;margin-left:auto}
+#search{width:100%;padding:8px 14px 7px;font-family:var(--body);font-size:15px;color:var(--ink);
+  background:rgba(248,240,220,.9);border:1px solid var(--bronze);border-radius:2px;outline:none}
+#search::placeholder{color:var(--ink-4);font-style:italic}
+#search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,74,.18)}
+#sresults{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#F8F0DC;border:1px solid var(--bronze);
+  border-radius:2px;overflow:hidden;display:none;box-shadow:0 10px 30px rgba(36,28,21,.18)}
+#sresults.open{display:block}
+#sresults .it{padding:8px 14px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+#sresults .it:hover,#sresults .it.act{background:rgba(201,162,74,.15)}
+#sresults .it .n{font-family:var(--serif);font-weight:600;font-size:15px}
+#sresults .it .y{font-size:12px;color:var(--ink-3);font-style:italic;white-space:nowrap}
+#navbtns{display:flex;gap:8px;flex:0 0 auto}
+.hbtn{font-family:var(--caps);font-size:12.5px;letter-spacing:.09em;color:var(--ink-2);cursor:pointer;
+  padding:7px 13px 6px;border:1px solid rgba(140,109,63,.55);border-radius:2px;background:rgba(248,240,220,.75);
+  transition:all .25s;user-select:none;white-space:nowrap}
+.hbtn:focus-visible,.zbtn:focus-visible,.rnbtn:focus-visible,#wordmark:focus-visible,.pcard:focus-visible,
+.rpchip:focus-visible,#pclose:focus-visible,#mclose:focus-visible,#rclose:focus-visible,#rtoc:focus-visible{
+  outline:2px solid var(--gold);outline-offset:2px}
+.hbtn:hover{border-color:var(--gold);color:var(--wine);background:rgba(248,240,220,.98)}
+
+/* --- controles zoom + minimapa ------------------------------------------ */
+#zoomctl{position:fixed;right:18px;bottom:170px;z-index:9;display:flex;flex-direction:column;gap:6px}
+.zbtn{width:38px;height:38px;display:grid;place-items:center;cursor:pointer;font-family:var(--serif);
+  font-size:21px;color:var(--ink-2);background:rgba(248,240,220,.92);border:1px solid var(--bronze);
+  border-radius:2px;transition:all .2s;user-select:none;line-height:1}
+.zbtn:hover{color:var(--wine);border-color:var(--gold)}
+.zbtn svg{display:block}
+#minimap{position:fixed;right:18px;bottom:18px;z-index:9;width:208px;height:138px;cursor:pointer;
+  background:rgba(243,233,210,.92);border:1px solid var(--bronze);border-radius:2px;
+  box-shadow:inset 0 0 0 3px rgba(243,233,210,.9), inset 0 0 0 4px rgba(140,109,63,.5)}
+#minimap canvas{position:absolute;inset:0;width:100%;height:100%}
+
+/* --- panel de ficha ------------------------------------------------------ */
+#panel{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100vw;z-index:20;
+  background:linear-gradient(105deg, #F1E6CB, #F6EDD8 30%);
+  border-left:1px solid var(--bronze);box-shadow:-18px 0 50px rgba(36,28,21,.22);
+  transform:translateX(calc(100% + 60px));transition:transform .5s cubic-bezier(.3,.8,.3,1);
+  display:flex;flex-direction:column}
+#panel.open{transform:none}
+#panel::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:var(--bronze);opacity:.5}
+#pclose{position:absolute;top:14px;right:16px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;
+  color:var(--ink-3);border:1px solid transparent;border-radius:50%;font-size:17px;transition:all .2s;z-index:2;background:none;font-family:var(--body)}
+#pclose:hover{color:var(--wine);border-color:var(--bronze)}
+#pbody{overflow-y:auto;padding:30px 30px 60px 34px;scrollbar-width:thin;scrollbar-color:var(--bronze) transparent}
+.pk{font-family:var(--caps);font-size:11.5px;letter-spacing:.18em;color:var(--bronze)}
+.pname{font-family:var(--serif);font-weight:600;font-size:31px;line-height:1.08;margin:6px 0 2px;color:var(--ink)}
+.pvital{font-family:var(--body);font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.5}
+.pvital .g{color:var(--bronze)}
+.badge{display:inline-flex;align-items:center;gap:9px;margin-top:14px;padding:7px 13px 6px;
+  border:1px solid var(--bronze);border-radius:2px;background:rgba(255,252,242,.55)}
+.badge .seal{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;color:#F8F0DC;
+  font-family:var(--caps);font-size:12.5px;flex:0 0 auto;box-shadow:inset 0 0 0 1.5px rgba(248,240,220,.55)}
+.badge .tx{font-family:var(--caps);font-size:11.5px;letter-spacing:.08em;color:var(--ink-2)}
+.orignote{margin-top:14px;padding:10px 14px;border-left:2px solid var(--gold);font-style:italic;
+  font-size:14px;line-height:1.55;color:var(--ink-2);background:rgba(201,162,74,.08)}
+.sec{margin-top:26px}
+.sechdr{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sechdr .l{font-family:var(--caps);font-size:12.5px;letter-spacing:.2em;color:var(--wine);white-space:nowrap}
+.sechdr svg{flex:1;height:12px;min-width:30px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:var(--body);font-size:13.5px;padding:4px 12px 3px;border:1px solid rgba(140,109,63,.5);
+  border-radius:20px;color:var(--ink-2);background:rgba(255,252,242,.5)}
+.note{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin-bottom:12px;text-align:justify;hyphens:auto}
+.note:first-of-type::first-letter{font-family:var(--display);font-size:200%;line-height:.85;color:var(--wine);padding-right:2px}
+.ev{margin-bottom:12px;padding-left:14px;border-left:2px solid rgba(201,162,74,.55)}
+.ev .d{font-family:var(--caps);font-size:12px;color:var(--bronze);letter-spacing:.06em}
+.ev .t{font-size:15px;line-height:1.5;color:var(--ink-2)}
+.rel{margin-bottom:14px}
+.rel .rk{font-family:var(--caps);font-size:11px;letter-spacing:.14em;color:var(--bronze);margin-bottom:6px}
+.pcard{display:flex;justify-content:space-between;align-items:baseline;gap:10px;width:100%;text-align:left;
+  padding:8px 13px;margin-bottom:6px;cursor:pointer;border:1px solid rgba(140,109,63,.45);border-radius:2px;
+  background:rgba(255,252,242,.6);transition:all .2s;font-family:var(--body)}
+.pcard:hover{border-color:var(--gold);background:#FBF4E2;transform:translateX(3px)}
+.pcard .n{font-family:var(--serif);font-weight:600;font-size:15.5px;color:var(--ink)}
+.pcard .y{font-size:12px;font-style:italic;color:var(--ink-3);white-space:nowrap}
+.uhead{font-size:13.5px;font-style:italic;color:var(--ink-3);margin:2px 0 6px}
+.unote{font-size:13.5px;font-style:italic;line-height:1.5;color:var(--ink-3);margin:4px 0 10px;padding-left:12px;border-left:2px solid rgba(140,109,63,.35)}
+.src{margin-bottom:14px;padding:12px 14px;border:1px solid rgba(140,109,63,.4);border-radius:2px;background:rgba(255,252,242,.5)}
+.src .st{display:flex;gap:9px;align-items:flex-start}
+.src .seal{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:#F8F0DC;
+  font-family:var(--caps);font-size:11px;flex:0 0 auto;margin-top:2px;box-shadow:inset 0 0 0 1.2px rgba(248,240,220,.5)}
+.src .tt{font-family:var(--serif);font-weight:600;font-size:15.5px;line-height:1.25;color:var(--ink)}
+.src .au{font-size:12.5px;color:var(--ink-3);font-style:italic;margin-top:2px}
+.src .tx{font-family:var(--fell);font-size:13px;line-height:1.5;color:var(--ink-2);margin-top:8px;padding-left:11px;border-left:2px solid rgba(201,162,74,.5)}
+.src a{display:inline-block;margin:8px 8px 0 0;font-family:var(--caps);font-size:11px;letter-spacing:.08em;
+  color:var(--wine);text-decoration:none;border:1px solid rgba(140,109,63,.55);border-radius:2px;padding:4px 10px 3px;transition:all .2s}
+.src a:hover{border-color:var(--gold);background:rgba(201,162,74,.12)}
+.g-A{background:var(--gA)}.g-B{background:var(--gB)}.g-C{background:var(--gC)}.g-D{background:var(--gD)}.g-E{background:var(--gE)}.g-X{background:var(--ink-4)}
+
+/* --- modales -------------------------------------------------------------- */
+#modal{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:30px 18px}
+#modal.open{display:flex}
+#modal .veil{position:absolute;inset:0;background:rgba(36,28,21,.45)}
+#mbox{position:relative;width:min(720px,94vw);max-height:86vh;display:flex;flex-direction:column;
+  background:#F6EDD8;border:1px solid var(--bronze);border-radius:2px;
+  box-shadow:0 30px 80px rgba(20,14,8,.4), inset 0 0 0 5px #F6EDD8, inset 0 0 0 6px rgba(140,109,63,.55)}
+#mhead{padding:26px 34px 4px;text-align:center}
+#mhead .mt{font-family:var(--display);font-size:27px;color:var(--ink);letter-spacing:.02em}
+#mbody{overflow-y:auto;padding:8px 36px 36px;scrollbar-width:thin;scrollbar-color:var(--bronze) transparent}
+#mclose{position:absolute;top:12px;right:14px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;
+  color:var(--ink-3);font-size:17px;border:1px solid transparent;border-radius:50%;transition:all .2s;background:none;font-family:var(--body)}
+#mclose:hover{color:var(--wine);border-color:var(--bronze)}
+#mbody p{font-size:16px;line-height:1.66;color:var(--ink-2);margin-bottom:13px;text-align:justify;hyphens:auto}
+#mbody .lead::first-letter{font-family:var(--display);font-size:230%;line-height:.8;color:var(--wine);padding-right:3px;float:left;margin-top:4px}
+#mbody h3{font-family:var(--caps);font-weight:400;font-size:14px;letter-spacing:.2em;color:var(--wine);margin:24px 0 10px}
+.legrow{display:flex;gap:14px;align-items:flex-start;margin-bottom:11px}
+.legrow .seal{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#F8F0DC;font-family:var(--caps);font-size:13px;flex:0 0 auto;box-shadow:inset 0 0 0 1.5px rgba(248,240,220,.5)}
+.legrow .d{font-size:15px;line-height:1.5;color:var(--ink-2);padding-top:2px}
+.legrow svg{flex:0 0 74px;margin-top:8px}
+kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border-radius:3px;padding:1px 7px;background:rgba(255,252,242,.7);color:var(--ink-2)}
+
+/* --- lector de la novela ------------------------------------------------------ */
+#reader{position:fixed;inset:0;z-index:35;display:none;flex-direction:column;
+  background:radial-gradient(ellipse 120% 100% at 50% 0%, #F6EDD8, #EADDBD 80%)}
+#reader.open{display:flex}
+#reader::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.45;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.14 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+#rbar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 22px;border-bottom:1px solid rgba(140,109,63,.4)}
+#rbar .bt{font-family:var(--caps);font-size:14px;letter-spacing:.22em;color:var(--wine)}
+#rbar .bs{font-family:var(--body);font-style:italic;font-size:12px;color:var(--ink-3)}
+#rclose{width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-3);
+  font-size:17px;border:1px solid transparent;border-radius:50%;transition:all .2s;background:none;font-family:var(--body)}
+#rclose:hover{color:var(--wine);border-color:var(--bronze)}
+#rscroll{position:relative;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--bronze) transparent}
+#rpage{max-width:700px;margin:0 auto;padding:48px 30px 90px}
+.rhead{text-align:center;margin-bottom:38px}
+.rhead .rnum{font-family:var(--display);font-size:58px;color:var(--gold);line-height:1}
+.rhead .rnum.small{font-size:30px;letter-spacing:.28em;font-family:var(--caps);color:var(--gold)}
+.rhead .rtitle{font-family:var(--display);font-size:clamp(27px,4.6vw,38px);color:var(--ink);margin-top:10px;line-height:1.15}
+.rhead .rctx{font-family:var(--caps);font-size:13px;letter-spacing:.26em;color:var(--bronze);margin-top:14px}
+.rhead svg{margin-top:18px;width:150px;height:14px}
+.rp{font-size:17.5px;line-height:1.74;color:var(--ink-2);margin-bottom:17px;text-align:justify;hyphens:auto}
+.rp.first::first-letter{font-family:var(--display);font-size:340%;line-height:.78;color:var(--wine);float:left;padding:6px 8px 0 0}
+.rnota{margin-top:44px;padding:22px 26px;border:1px solid var(--bronze);position:relative;background:rgba(255,252,242,.45)}
+.rnota::before{content:'';position:absolute;inset:4px;border:.5px solid rgba(140,109,63,.6);pointer-events:none}
+.rnota .nl{font-family:var(--caps);font-size:12px;letter-spacing:.34em;color:var(--wine);text-align:center;margin-bottom:12px}
+.rnota .nt{font-family:var(--fell);font-style:italic;font-size:14.5px;line-height:1.6;color:var(--ink-2);margin-bottom:14px}
+.rref{display:flex;gap:9px;align-items:baseline;margin-bottom:8px;font-size:13.5px;line-height:1.45}
+.rref .rid{font-family:var(--caps);font-size:11px;color:var(--gA);flex:0 0 30px}
+.rref .rt{color:var(--ink-2)}
+.rref .rm{color:var(--ink-3);font-style:italic;font-size:12.5px}
+.rref a{color:var(--wine);text-decoration:none;font-family:var(--caps);font-size:11px;letter-spacing:.06em;margin-left:6px}
+.rref a:hover{color:var(--gold)}
+.rpersons{margin-top:30px}
+.rpersons .pl{font-family:var(--caps);font-size:11.5px;letter-spacing:.22em;color:var(--bronze);margin-bottom:10px}
+.rpersons .chips{gap:8px}
+.rpchip{font-family:var(--serif);font-weight:600;font-size:14.5px;padding:6px 14px 5px;cursor:pointer;
+  border:1px solid rgba(140,109,63,.5);border-radius:2px;background:rgba(255,252,242,.6);color:var(--ink);transition:all .2s}
+.rpchip:hover{border-color:var(--gold);background:#FBF4E2;color:var(--wine)}
+#rnav{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 22px;border-top:1px solid rgba(140,109,63,.4)}
+.rnbtn{font-family:var(--caps);font-size:12.5px;letter-spacing:.1em;color:var(--ink-2);cursor:pointer;
+  padding:8px 14px 7px;border:1px solid rgba(140,109,63,.5);border-radius:2px;background:rgba(248,240,220,.7);transition:all .2s;user-select:none}
+.rnbtn:hover{border-color:var(--gold);color:var(--wine)}
+.rnbtn[disabled]{opacity:.35;pointer-events:none}
+#rtoc{font-family:var(--body);font-size:14px;color:var(--ink);background:rgba(248,240,220,.9);
+  border:1px solid var(--bronze);border-radius:2px;padding:7px 10px;max-width:46vw;outline:none}
+
+/* --- intro ------------------------------------------------------------------ */
+#intro{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(ellipse 110% 90% at 50% 42%, #F6EDD8, #E4D5B7 75%, #D8C49C);
+  transition:opacity .9s ease, visibility .9s}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+#intro::before{content:'';position:absolute;inset:0;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.14 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+#ibox{position:relative;max-width:660px;text-align:center;padding:54px 46px 44px}
+.iframe-line{position:absolute;inset:0;border:1px solid var(--bronze);opacity:.9}
+.iframe-line::before{content:'';position:absolute;inset:5px;border:2.5px solid var(--gold);opacity:.55}
+.iframe-line::after{content:'';position:absolute;inset:11px;border:.5px solid var(--bronze);opacity:.8}
+.icorner{position:absolute;width:92px;height:92px;color:var(--bronze);opacity:.9}
+.icorner.tl{top:-14px;left:-14px}.icorner.tr{top:-14px;right:-14px;transform:scaleX(-1)}
+.icorner.bl{bottom:-14px;left:-14px;transform:scaleY(-1)}.icorner.br{bottom:-14px;right:-14px;transform:scale(-1)}
+#ibox .over{font-family:var(--caps);font-size:13.5px;letter-spacing:.34em;color:var(--bronze);margin-bottom:16px}
+#ibox h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,56px);line-height:1.04;color:var(--ink);margin-bottom:6px}
+#ibox h1 .amp{color:var(--gold);font-style:italic;font-family:var(--serif)}
+#ibox .sub{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.6vw,21px);color:var(--ink-2);margin:10px 0 4px}
+#ibox .years{font-family:var(--caps);font-size:15px;letter-spacing:.3em;color:var(--wine);margin:14px 0 4px}
+#ibox .desc{font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:480px;margin:16px auto 0;font-style:italic}
+#istats{display:flex;justify-content:center;gap:26px;margin:24px 0 8px;flex-wrap:wrap}
+#istats .st{text-align:center}
+#istats .v{font-family:var(--serif);font-weight:600;font-size:25px;color:var(--ink)}
+#istats .k{font-family:var(--caps);font-size:10.5px;letter-spacing:.18em;color:var(--bronze)}
+#enter{margin-top:22px;display:inline-block;font-family:var(--caps);font-size:15px;letter-spacing:.24em;
+  color:var(--paper);background:var(--ink);border:1px solid var(--ink);padding:14px 38px 12px;cursor:pointer;
+  border-radius:2px;transition:all .3s;position:relative}
+#enter:hover{background:var(--wine);border-color:var(--wine);letter-spacing:.3em}
+#iwarn{margin-top:18px;font-size:12.5px;font-style:italic;color:var(--ink-3);max-width:460px;margin-left:auto;margin-right:auto;line-height:1.5}
+
+/* --- loader ------------------------------------------------------------------ */
+#loader{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;background:#241C15;transition:opacity .7s ease,visibility .7s}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+#loader .wm{font-family:var(--caps);font-size:clamp(17px,3.4vw,26px);letter-spacing:.4em;color:#E4D5B7;padding-left:.4em}
+#loader .wm em{font-style:normal;color:var(--gold)}
+#loader .bar{width:min(320px,60vw);height:1px;background:rgba(228,213,183,.25);overflow:hidden}
+#loader .bar i{display:block;height:100%;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;
+  animation:ldbar 1.6s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes ldbar{to{transform:scaleX(1)}}
+#loader .sub{font-family:var(--fell);font-style:italic;font-size:13px;color:rgba(228,213,183,.6)}
+
+/* --- responsive ---------------------------------------------------------------- */
+@media (max-width:900px){
+  #chrome{flex-wrap:wrap;padding-left:88px;row-gap:8px}
+  #searchwrap{order:3;flex:1 1 100%;margin-left:0}
+  #panel{width:100vw}
+}
+@media (max-width:640px){
+  #ruler{width:56px}
+  #chrome{padding-left:64px}
+  #minimap{display:none}
+  #zoomctl{bottom:18px}
+  #navbtns{overflow-x:auto;max-width:100%;scrollbar-width:none}
+  #wordmark .s{display:none}
+  #pbody{padding:24px 20px 60px 24px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<noscript><div style="padding:40px;font-family:Georgia">Esta aplicación necesita JavaScript.</div></noscript>
+<div id="paper"></div>
+
+<svg id="stage" xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs"></defs>
+  <g id="camera"><g id="world"><rect id="selglow"></rect></g></g>
+</svg>
+
+<svg id="ruler" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rulgrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E9DCBE" stop-opacity=".97"/>
+      <stop offset=".85" stop-color="#E9DCBE" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#E9DCBE" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="rcontent"></g>
+</svg>
+
+<header id="chrome">
+  <div id="wordmark" title="Volver al inicio del árbol" role="button" tabindex="0">
+    <div class="t">FAMILIA <em>ESCOHOTADO</em></div>
+    <div class="s">Mayorazgo de Galapagar · 1685 – 2026</div>
+  </div>
+  <div id="searchwrap">
+    <input id="search" type="text" placeholder="Buscar a una persona…" autocomplete="off" spellcheck="false">
+    <div id="sresults"></div>
+  </div>
+  <nav id="navbtns">
+    <button class="hbtn" data-act="tree">Tronco</button>
+    <button class="hbtn" data-act="annex">Colaterales</button>
+    <button class="hbtn" data-act="novel">Novela</button>
+    <button class="hbtn" data-act="sources">Fuentes</button>
+    <button class="hbtn" data-act="legend">Cómo leerlo</button>
+    <button class="hbtn" data-act="about">Acerca</button>
+  </nav>
+</header>
+
+<div id="zoomctl">
+  <button class="zbtn" data-z="in" title="Acercar" aria-label="Acercar">+</button>
+  <button class="zbtn" data-z="out" title="Alejar" aria-label="Alejar">−</button>
+  <button class="zbtn" data-z="fit" title="Ver todo" aria-label="Ver todo" style="font-size:14px">⛶</button>
+</div>
+<div id="minimap"><canvas></canvas></div>
+
+<aside id="panel" aria-label="Ficha de persona">
+  <button id="pclose" title="Cerrar">✕</button>
+  <div id="pbody"></div>
+</aside>
+
+<div id="modal">
+  <div class="veil"></div>
+  <div id="mbox">
+    <button id="mclose" title="Cerrar">✕</button>
+    <div id="mhead"><div class="mt"></div></div>
+    <div id="mbody"></div>
+  </div>
+</div>
+
+<div id="reader" aria-label="La casa de la piedra — lector">
+  <div id="rbar">
+    <div><div class="bt">LA CASA DE LA PIEDRA</div><div class="bs">crónica novelada y documentada · 1685 – 2026</div></div>
+    <button id="rclose" title="Cerrar">✕</button>
+  </div>
+  <div id="rscroll"><div id="rpage"></div></div>
+  <div id="rnav">
+    <button class="rnbtn" id="rprev">‹ Anterior</button>
+    <select id="rtoc" aria-label="Capítulo"></select>
+    <button class="rnbtn" id="rnext">Siguiente ›</button>
+  </div>
+</div>
+
+<div id="intro" class="hide" style="visibility:hidden">
+  <div id="ibox">
+    <div class="iframe-line"></div>
+    <svg class="icorner tl" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4,96 C4,40 40,4 96,4"/><path d="M10,92 C12,46 46,12 92,10" stroke-width=".7"/><path d="M96,4 c9,3 11,12 4,16 c-6,4 -13,-1 -10,-8"/><path d="M4,96 c3,-9 12,-11 16,-4 c4,6 -1,13 -8,10"/><path d="M38,22 q6,-10 16,-12 q-4,8 -16,12z" fill="currentColor" opacity=".6"/><path d="M22,38 q-10,6 -12,16 q8,-4 12,-16z" fill="currentColor" opacity=".6"/></g></svg>
+    <svg class="icorner tr" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4,96 C4,40 40,4 96,4"/><path d="M10,92 C12,46 46,12 92,10" stroke-width=".7"/><path d="M96,4 c9,3 11,12 4,16 c-6,4 -13,-1 -10,-8"/><path d="M4,96 c3,-9 12,-11 16,-4 c4,6 -1,13 -8,10"/><path d="M38,22 q6,-10 16,-12 q-4,8 -16,12z" fill="currentColor" opacity=".6"/><path d="M22,38 q-10,6 -12,16 q8,-4 12,-16z" fill="currentColor" opacity=".6"/></g></svg>
+    <svg class="icorner bl" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4,96 C4,40 40,4 96,4"/><path d="M10,92 C12,46 46,12 92,10" stroke-width=".7"/><path d="M96,4 c9,3 11,12 4,16 c-6,4 -13,-1 -10,-8"/><path d="M4,96 c3,-9 12,-11 16,-4 c4,6 -1,13 -8,10"/><path d="M38,22 q6,-10 16,-12 q-4,8 -16,12z" fill="currentColor" opacity=".6"/><path d="M22,38 q-10,6 -12,16 q8,-4 12,-16z" fill="currentColor" opacity=".6"/></g></svg>
+    <svg class="icorner br" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4,96 C4,40 40,4 96,4"/><path d="M10,92 C12,46 46,12 92,10" stroke-width=".7"/><path d="M96,4 c9,3 11,12 4,16 c-6,4 -13,-1 -10,-8"/><path d="M4,96 c3,-9 12,-11 16,-4 c4,6 -1,13 -8,10"/><path d="M38,22 q6,-10 16,-12 q-4,8 -16,12z" fill="currentColor" opacity=".6"/><path d="M22,38 q-10,6 -12,16 q8,-4 12,-16z" fill="currentColor" opacity=".6"/></g></svg>
+
+    <div class="over">MAYORAZGO DE GALAPAGAR</div>
+    <h1>Familia <span class="amp">Escohotado</span></h1>
+    <div class="sub">Árbol genealógico de una familia — síntesis documental reconciliada</div>
+    <div class="years">MDCLXXXV — MMXXVI</div>
+    <div id="istats"></div>
+    <div class="desc">Una tarde de 2026, Guillermo Guerra descubrió en casa de su abuela, María Teresa Escohotado, el manuscrito del árbol familiar. Con la inteligencia artificial como linterna reconstruyó sus huecos y le dio forma de historia: diez generaciones, de Pablo (h. 1685) a Leo, el último de la estirpe. Cada filiación conserva su grado de evidencia, y cada rama, su capítulo en <em>«La casa de la piedra»</em>.</div>
+    <button id="enter">ABRIR EL ÁRBOL</button>
+    <div id="iwarn">El tronco anterior a 1843 no está probado por una serie continua de partidas; se conserva porque es el punto de partida que la familia transmitió.</div>
+  </div>
+</div>
+
+<div id="loader">
+  <div class="wm">FAMILIA <em>ESCOHOTADO</em></div>
+  <div class="bar"><i></i></div>
+  <div class="sub">Grabando el árbol…</div>
+</div>
+
+<script src="tree-data.js"></script>
+<script src="novel-data.js"></script>
+<script>
+'use strict';
+/* ================= utilidades ================= */
+const SVGNS='http://www.w3.org/2000/svg';
+const $=s=>document.querySelector(s);
+const G=GENEALOGY, P=G.people, F=G.families, S=G.sources;
+const ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function el(tag,attrs,parent){const e=document.createElementNS(SVGNS,tag);for(const k in attrs||{})e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function h(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+// rótulo corto de año honesto con el GEDCOM: horquillas BET y aproximados ABT
+function yrDisp(ev){
+  if(!ev)return null;
+  const r=ev.raw||'';
+  const bet=r.match(/^BET\D*(\d{4})\s+AND\D*(\d{4})/i);
+  if(bet)return bet[1]+'–'+(bet[1].slice(0,2)===bet[2].slice(0,2)?bet[2].slice(2):bet[2]);
+  if(ev.year==null)return null;
+  if(/^(ABT|EST|CAL)/i.test(r))return 'h. '+ev.year;
+  if(/^BEF/i.test(r))return 'a. de '+ev.year;
+  if(/^AFT/i.test(r))return 'd. de '+ev.year;
+  return String(ev.year);
+}
+function yearsOf(p){
+  const b=yrDisp(p.birth),d=yrDisp(p.death);
+  if(b&&d)return b+' – '+d; if(b)return p.death?b+' – †':b; if(d)return '† '+d; return p.death?'†':'';}
+function gradeName(g){return{A:'fuente primaria u oficial',B:'autoridad institucional',C:'fuente secundaria o índice',D:'tradición familiar',E:'inferencia'}[g]||'sin clasificar';}
+function gcol(g){return{A:'#9C7A2E',B:'#3E5641',C:'#8C5A33',D:'#8D7455',E:'#7D7668'}[g]||'#8f7c60';}
+
+/* ================= geometría / layout ================= */
+const CW=190, CH=76, GSIB=30, GSP=16, GUG=54;
+const PXY=4.0, MINROW=175;
+
+// filas por generación ancladas al tiempo
+const anchors=Object.entries(G.genAnchors).map(([g,y])=>({g:+g,year:y})).sort((a,b)=>a.g-b.g);
+const rowY={};
+rowY[anchors[0].g]=0;
+for(let i=1;i<anchors.length;i++){
+  const dy=(anchors[i].year-anchors[i-1].year)*PXY;
+  rowY[anchors[i].g]=rowY[anchors[i-1].g]+Math.max(dy,MINROW);
+}
+const YA=anchors.map(a=>a.year), YR=anchors.map(a=>rowY[a.g]);
+function yearToY(yr){
+  if(yr<=YA[0])return YR[0]+(yr-YA[0])*(YR[1]-YR[0])/(YA[1]-YA[0]);
+  for(let i=1;i<YA.length;i++)if(yr<=YA[i])return YR[i-1]+(yr-YA[i-1])*(YR[i]-YR[i-1])/(YA[i]-YA[i-1]);
+  const n=YA.length-1;return YR[n]+(yr-YA[n])*(YR[n]-YR[n-1])/(YA[n]-YA[n-1]);
+}
+function yToYear(y){
+  if(y<=YR[0])return YA[0]+(y-YR[0])*(YA[1]-YA[0])/(YR[1]-YR[0]);
+  for(let i=1;i<YR.length;i++)if(y<=YR[i])return YA[i-1]+(y-YR[i-1])*(YA[i]-YA[i-1])/(YR[i]-YR[i-1]);
+  const n=YR.length-1;return YA[n]+(y-YR[n])*(YA[n]-YA[n-1])/(YR[n]-YR[n-1]);
+}
+
+// disposición recursiva del tronco: persona + cónyuges arriba, grupos de hijos por unión debajo
+const pos={}; // id -> {x,y} centro de la carta
+const unionMeta=[]; // {fid, parent, spouse, children[], bracket(idx uniones múltiples)}
+function subtreeWidth(pid){
+  const p=P[pid];
+  const unions=p.fams.map(f=>F[f]).filter(Boolean);
+  const rowN=1+unions.filter(u=>spouseOf(u,pid)).length;
+  const rowW=rowN*CW+(rowN-1)*GSP;
+  let chW=0,nGroups=0;
+  for(const u of unions){const kids=u.children.filter(c=>P[c]);if(!kids.length)continue;nGroups++;
+    chW+=kids.reduce((s,c)=>s+subtreeWidth(c),0)+(kids.length-1)*GSIB;}
+  if(nGroups>1)chW+=(nGroups-1)*GUG;
+  p._w=Math.max(rowW,chW||0);
+  return p._w;
+}
+const spouseOf=(u,pid)=>{const s=u.husband===pid?u.wife:u.husband;return s&&P[s]?s:null;};
+
+function placeSubtree(pid,x0){
+  const p=P[pid], gy=rowY[p.gen];
+  const unions=p.fams.map(f=>F[f]).filter(Boolean);
+  const spouses=unions.map(u=>spouseOf(u,pid));
+  const rowN=1+spouses.filter(Boolean).length;
+  const rowW=rowN*CW+(rowN-1)*GSP;
+  const rowX=x0+(p._w-rowW)/2;
+  pos[pid]={x:rowX+CW/2,y:gy};
+  let sx=rowX+CW+GSP;
+  for(const s of spouses){if(!s)continue;pos[s]={x:sx+CW/2,y:gy};sx+=CW+GSP;}
+  // hijos
+  const groups=unions.map(u=>({u,kids:u.children.filter(c=>P[c])})).filter(g=>g.kids.length);
+  let chW=groups.reduce((s,g)=>s+g.kids.reduce((a,c)=>a+P[c]._w,0)+(g.kids.length-1)*GSIB,0);
+  if(groups.length>1)chW+=(groups.length-1)*GUG;
+  let cx=x0+(p._w-chW)/2;
+  for(const g of groups){
+    for(const c of g.kids){placeSubtree(c,cx);cx+=P[c]._w+GSIB;}
+    cx+=GUG-GSIB;
+  }
+  unions.forEach((u,i)=>unionMeta.push({u,parent:pid,spouse:spouses[i],idx:i,kids:u.children.filter(c=>P[c])}));
+}
+
+subtreeWidth(G.root);
+placeSubtree(G.root,0);
+
+/* ================= construcción del SVG ================= */
+const world=$('#world'), camera=$('#camera'), stage=$('#stage');
+const linkLayer=el('g',{id:'links'},world);
+const nodeLayer=el('g',{id:'nodes'},world);
+world.insertBefore(linkLayer,world.firstChild);
+world.insertBefore(nodeLayer,$('#selglow'));
+
+const famElems={}; // fid -> [elements] para iluminar la línea de sucesión
+const cardElems={};
+
+function sprigPath(){return 'M0,3 Q0,-3 0,-7 M0,-1 Q-6,-4 -9,-9 M0,-1 Q6,-4 9,-9';}
+function makeCard(pid,cls,delay){
+  const p=P[pid], c=pos[pid];
+  const g=el('g',{class:'card '+cls,'data-id':pid},nodeLayer);
+  if(delay!=null)g.style.setProperty('--d',delay+'s');
+  const x=c.x-CW/2,y=c.y-CH/2;
+  el('rect',{class:'bg',x,y,width:CW,height:CH,rx:3},g);
+  el('rect',{class:'inner',x:x+3.5,y:y+3.5,width:CW-7,height:CH-7,rx:2},g);
+  el('rect',{class:'trace',x:x+1.5,y:y+1.5,width:CW-3,height:CH-3,rx:3,pathLength:100},g);
+  el('path',{class:'sprig',d:sprigPath(),transform:`translate(${c.x},${y+2})`,},g);
+  const nm=el('text',{class:'nm',x:c.x,y:y+27,'text-anchor':'middle'},g);nm.textContent=p.given||p.name;
+  const sn=el('text',{class:'sn',x:c.x,y:y+42,'text-anchor':'middle'},g);sn.textContent=(p.surname||'').toUpperCase();
+  const yr=el('text',{class:'yr',x:c.x,y:y+57,'text-anchor':'middle'},g);yr.textContent=yearsOf(p);
+  const capT=p.occupations[0]||p.titles[0]||'';
+  if(capT){const cp=el('text',{class:'cap',x:c.x,y:y+70,'text-anchor':'middle'},g);
+    cp.textContent=capT.length>34?capT.slice(0,32)+'…':capT;}
+  // sello de evidencia
+  if(p.grade){const sg=el('g',{class:'gseal',transform:`translate(${x+CW-13},${y+13})`},g);
+    el('circle',{r:8,fill:gcol(p.grade),stroke:'rgba(248,240,220,.6)','stroke-width':1},sg);
+    el('circle',{r:5.6,fill:'none',stroke:'rgba(248,240,220,.55)','stroke-width':.7,'stroke-dasharray':'1.2 1.6'},sg);
+    const t=el('text',{y:3.4,'text-anchor':'middle',fill:'#F8F0DC','font-size':9,style:'font-family:var(--caps)'},sg);t.textContent=p.grade;}
+  cardElems[pid]=g;
+  return g;
+}
+function fitText(t,maxW){try{const l=t.getComputedTextLength();if(l>maxW){t.setAttribute('textLength',maxW);t.setAttribute('lengthAdjust','spacingAndGlyphs');}}catch(e){}}
+
+function laurel(gEl,cx,cy,mirror){
+  const lg=el('g',{class:'laurel',transform:`translate(${cx},${cy}) scale(${mirror?-1:1},1)`},gEl);
+  el('path',{d:'M0,34 Q-30,10 -32,-30'},lg);
+  const pts=[[ -6,26,-52],[-15,16,-60],[-22,4,-70],[-26,-9,-80],[-29,-21,-92],[-30,-30,-104]];
+  for(const[px,py,a]of pts){
+    el('path',{class:'leaf',d:'M0,0 Q7,-5 15,-1 Q7,4 0,0',transform:`translate(${px},${py}) rotate(${a})`},lg);
+    el('path',{class:'leaf',d:'M0,0 Q7,-5 15,-1 Q7,4 0,0',transform:`translate(${px},${py}) rotate(${a+95}) scale(.85)`},lg);
+  }
+}
+
+// enlaces por unión
+function drawUnion(m,delayBase){
+  const {u,parent,spouse,idx,kids}=m;
+  const pp=pos[parent];if(!pp)return;
+  const grade=u.grade||'C';
+  const cls='link g'+grade;
+  const els=[];
+  const dsBase=delayBase!=null?delayBase:0;
+  let mx,my;
+  if(spouse&&pos[spouse]){
+    const sp=pos[spouse];
+    const adj=Math.abs(sp.x-pp.x)<=CW+GSP+2&&idx===0;
+    if(adj){
+      mx=(pp.x+sp.x)/2;my=pp.y;
+      const l1=el('path',{class:cls,d:`M${pp.x+CW/2},${pp.y} L${sp.x-CW/2},${sp.y}`,pathLength:1},linkLayer);els.push(l1);
+      const tie=el('g',{class:'tie',transform:`translate(${mx},${pp.y-9})`},linkLayer);
+      el('circle',{r:4,cx:-2.6},tie);el('circle',{r:4,cx:2.6},tie);els.push(tie);
+      if(u.marriage&&(u.marriage.year||u.marriage.text)){
+        const ty=el('text',{class:'tieyr',x:mx,y:pp.y-16,'text-anchor':'middle'},linkLayer);
+        ty.textContent=u.marriage.year||u.marriage.text;els.push(ty);}
+    }else{
+      // unión no adyacente: pinza por debajo de las cartas
+      const by=pp.y+CH/2+12+idx*13;
+      mx=(pp.x+sp.x)/2;my=by;
+      const l1=el('path',{class:cls,d:`M${pp.x},${pp.y+CH/2} V${by} H${sp.x} V${sp.y+CH/2}`,pathLength:1},linkLayer);els.push(l1);
+      const lab=el('text',{class:'ulabel',x:mx,y:by-4,'text-anchor':'middle'},linkLayer);
+      lab.textContent=(idx+1)+'.ª unión'+(u.marriage&&u.marriage.year?' · '+u.marriage.year:'');els.push(lab);
+    }
+  }else{mx=pp.x;my=pp.y+CH/2;}
+  if(kids.length){
+    const rowKid=rowY[P[kids[0]].gen];
+    const busY=rowKid-CH/2-34-(idx*12);
+    const xs=kids.map(k=>pos[k].x);
+    const x1=Math.min(...xs,mx),x2=Math.max(...xs,mx);
+    const startY=(spouse&&pos[spouse])?(my===pp.y?pp.y+9:my):my;
+    const trunk=el('path',{class:cls,d:`M${mx},${my===pp.y?pp.y+CH/2:startY} V${busY}${x1===x2?'':` M${x1},${busY} H${x2}`}`,pathLength:1},linkLayer);els.push(trunk);
+    for(const k of kids){
+      const dp=el('path',{class:cls,'data-child':k,d:`M${pos[k].x},${busY} V${pos[k].y-CH/2}`,pathLength:1},linkLayer);els.push(dp);}
+    // sello de la unidad familiar sobre el tronco
+    if(grade){const fy=(my===pp.y?pp.y+CH/2:my)+(busY-(my===pp.y?pp.y+CH/2:my))/2;
+      const fs=el('g',{class:'famseal'},linkLayer);
+      el('circle',{cx:mx,cy:fy,r:7.5,fill:'#F3E9D2',stroke:gcol(grade),'stroke-width':1},fs);
+      const t=el('text',{x:mx,y:fy+3,'text-anchor':'middle',fill:gcol(grade)},fs);t.textContent=grade;
+      els.push(fs);}
+  }
+  els.forEach(e=>e.style.setProperty('--d',dsBase+'s'));
+  (famElems[u.id]=famElems[u.id]||[]).push(...els);
+}
+
+/* --- pinta tronco --- */
+for(const m of unionMeta){
+  const g=P[m.parent].gen;
+  drawUnion(m,reduced?0:0.35+(g+1)*0.28);
+}
+const mainSorted=G.mainIds.slice().sort((a,b)=>(P[a].gen||0)-(P[b].gen||0)||pos[a].x-pos[b].x);
+{let lastG=-1,i=0;
+for(const pid of mainSorted){
+  if(!pos[pid])continue;
+  const p=P[pid];if(p.gen!==lastG){lastG=p.gen;i=0}
+  const isRoot=pid===G.root;
+  const isBlood=p.famc||isRoot;
+  const d=reduced?0:0.3+p.gen*0.28+(i++)*0.02;
+  makeCard(pid,isRoot?'root':(isBlood?'blood':'consort'),d);
+}}
+// laureles de la raíz
+{const c=pos[G.root];const lg=el('g',{class:'annex-el'},nodeLayer);lg.style.setProperty('--d','0.25s');
+ laurel(lg,c.x-CW/2-16,c.y-4,false);laurel(lg,c.x+CW/2+16,c.y-4,true);
+ const t=el('text',{x:c.x,y:c.y-CH/2-16,'text-anchor':'middle',class:'annexgrp',fill:'var(--wine)'},lg);
+ t.textContent='CABEZA DEL ÁRBOL · SEGÚN EL MANUSCRITO';}
+
+/* --- gabinete de colaterales --- */
+const treeW=P[G.root]._w;
+const AX=treeW+240, AY=rowY[0]-70;
+const annexBounds={x:AX,y:AY,w:0,h:0};
+{
+  const frame=el('g',{id:'annexG'},world);
+  world.insertBefore(frame,nodeLayer);
+  const innerX=AX+46;let cy=AY+150;
+  const FW=Math.max(3*CW+2*GSIB, 640)+92;
+  // familias
+  const famGroups=G.annex.families.map(fid=>F[fid]);
+  for(const u of famGroups){
+    const kids=u.children.filter(c=>P[c]);
+    const coupleW=((u.husband?1:0)+(u.wife?1:0))*CW+GSP;
+    let x=innerX+ (FW-92-coupleW)/2;
+    const members=[u.husband,u.wife].filter(Boolean);
+    for(const mid of members){pos[mid]={x:x+CW/2,y:cy};x+=CW+GSP;}
+    unionMeta.push();
+    drawUnionAnnex(u,cy,kids,innerX,FW-92);
+    for(const mid of members)makeCard(mid,'annexp'+(P[mid].famc?'':' consort'),reduced?0:2.6);
+    if(kids.length){
+      const kw=kids.length*CW+(kids.length-1)*GSIB;
+      let kx=innerX+(FW-92-kw)/2;
+      for(const k of kids){pos[k]={x:kx+CW/2,y:cy+150};kx+=CW+GSIB;makeCard(k,'annexp',reduced?0:2.65);}
+      cy+=150;
+    }
+    cy+=170;
+  }
+  // sueltos
+  const singles=G.annex.singles.slice().sort((a,b)=>{
+    const ya=P[a].birth&&P[a].birth.year||9999,yb=P[b].birth&&P[b].birth.year||9999;
+    return ya-yb||P[a].name.localeCompare(P[b].name);});
+  const cols=3,gx=innerX,colW=CW+GSIB;
+  const shdr=el('text',{class:'annexgrp annex-el',x:innerX,y:cy+6},world);shdr.textContent='PERSONAJES DOCUMENTADOS SUELTOS';
+  shdr.style.setProperty('--d','2.6s');
+  cy+=44;
+  singles.forEach((sid,i)=>{
+    const col=i%cols,row=Math.floor(i/cols);
+    pos[sid]={x:gx+col*colW+CW/2,y:cy+row*(CH+34)+CH/2};
+    makeCard(sid,'annexp'+(P[sid].sex?'':''),reduced?0:2.7+i*0.02);
+  });
+  cy+=Math.ceil(singles.length/cols)*(CH+34);
+  // marco
+  const fh=cy-AY+40;
+  el('rect',{class:'annexframe annex-el',x:AX,y:AY,width:FW,height:fh,rx:4},frame);
+  el('rect',{class:'annexframe2 annex-el',x:AX+8,y:AY+8,width:FW-16,height:fh-16,rx:3},frame);
+  const hd=el('text',{class:'annexhdr annex-el',x:AX+FW/2,y:AY+58,'text-anchor':'middle'},frame);
+  hd.textContent='GABINETE DE COLATERALES';
+  const sb=el('text',{class:'annexsub annex-el',x:AX+FW/2,y:AY+82,'text-anchor':'middle'},frame);
+  sb.textContent='Escohotados y Grecianos documentados sin enlace probado con el tronco';
+  const sb2=el('text',{class:'annexsub annex-el',x:AX+FW/2,y:AY+100,'text-anchor':'middle'},frame);
+  sb2.textContent='— coincidencias de nombre, pistas y fratrías que la síntesis conserva sin afirmar parentesco —';
+  [frame.children[0],frame.children[1],hd,sb,sb2].forEach(e=>e.style.setProperty('--d','2.5s'));
+  annexBounds.w=FW;annexBounds.h=fh;
+}
+function drawUnionAnnex(u,cy,kids,ix,iw){
+  const grade=u.grade||'D';const cls='link g'+grade;
+  const els=[];
+  if(u.husband&&u.wife&&pos[u.husband]&&pos[u.wife]){
+    const a=pos[u.husband],b=pos[u.wife];
+    els.push(el('path',{class:cls,d:`M${a.x+CW/2},${a.y} L${b.x-CW/2},${b.y}`,pathLength:1},linkLayer));
+    const tie=el('g',{class:'tie',transform:`translate(${(a.x+b.x)/2},${a.y-9})`},linkLayer);
+    el('circle',{r:4,cx:-2.6},tie);el('circle',{r:4,cx:2.6},tie);els.push(tie);
+  }
+  if(kids.length){
+    const mx=(pos[u.husband]?pos[u.husband].x+CW/2+GSP/2:ix+iw/2);
+    const busY=cy+150-CH/2-26;
+    const kxs=kids.map((k,i)=>ix+(iw-(kids.length*CW+(kids.length-1)*GSIB))/2+i*(CW+GSIB)+CW/2);
+    els.push(el('path',{class:cls,d:`M${mx},${cy+9} V${busY} M${Math.min(...kxs,mx)},${busY} H${Math.max(...kxs,mx)}`,pathLength:1},linkLayer));
+    kxs.forEach(x=>els.push(el('path',{class:cls,d:`M${x},${busY} V${cy+150-CH/2}`,pathLength:1},linkLayer)));
+  }
+  els.forEach(e=>{e.classList.add('annex-link');e.style.setProperty('--d','2.6s');});
+  (famElems[u.id]=famElems[u.id]||[]).push(...els);
+}
+
+// ajustar textos largos cuando las fuentes estén listas
+function fitAllTexts(){
+  for(const g of Object.values(cardElems)){
+    const nm=g.querySelector('.nm'),sn=g.querySelector('.sn'),cp=g.querySelector('.cap');
+    [nm,sn].forEach(t=>t&&fitText(t,CW-22));
+    cp&&fitText(cp,CW-26);
+  }
+}
+
+/* ================= cámara: pan / zoom con inercia ================= */
+const view={x:0,y:0,k:1}, target={x:0,y:0,k:1};
+let vel={x:0,y:0};
+const worldBounds=(()=>{
+  let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
+  for(const id in pos){const c=pos[id];x1=Math.min(x1,c.x-CW/2);x2=Math.max(x2,c.x+CW/2);y1=Math.min(y1,c.y-CH/2);y2=Math.max(y2,c.y+CH/2);}
+  x2=Math.max(x2,AX+annexBounds.w);y2=Math.max(y2,AY+annexBounds.h);y1=Math.min(y1,AY);
+  return{x1:x1-60,y1:y1-140,x2:x2+60,y2:y2+80};
+})();
+const treeBounds={x1:-40,y1:rowY[0]-130,x2:treeW+40,y2:rowY[anchors[anchors.length-1].g]+CH/2+60};
+const KMIN=0.055,KMAX=2.6;
+function clampK(k){return Math.max(KMIN,Math.min(KMAX,k));}
+function applyView(){
+  camera.setAttribute('transform',`translate(${view.x},${view.y}) scale(${view.k})`);
+  drawRuler();drawMinimap();
+}
+let raf=null,lastTick=0;
+// si el navegador congela rAF (pestaña ocupada/oculta), aplicar la vista al instante
+function ensureMotion(){
+  setTimeout(()=>{
+    if(performance.now()-lastTick>200){
+      vel.x=vel.y=0;Object.assign(view,target);applyView();
+    }
+  },180);
+}
+function tick(){
+  lastTick=performance.now();
+  const ease=reduced?1:0.16;
+  let moved=false;
+  // inercia
+  if(Math.abs(vel.x)>.1||Math.abs(vel.y)>.1){target.x+=vel.x;target.y+=vel.y;vel.x*=.92;vel.y*=.92;moved=true;}
+  for(const k of['x','y','k']){
+    const d=target[k]-view[k];
+    if(Math.abs(d)>(k==='k'?0.0004:0.4)){view[k]+=d*ease;moved=true;}
+    else if(view[k]!==target[k]){view[k]=target[k];moved=true;}
+  }
+  if(moved)applyView();
+  raf=requestAnimationFrame(tick);
+}
+let lastFit=null,userMoved=false;
+function fitBounds(b,pad,instant){
+  lastFit={b,pad};
+  const w=innerWidth,hh=innerHeight;
+  const RW=innerWidth<=640?56:78, HH=86;
+  const availW=w-RW-40-(panelOpen&&innerWidth>900?440:0),availH=hh-HH-40;
+  const k=clampK(Math.min(availW/(b.x2-b.x1+pad*2),availH/(b.y2-b.y1+pad*2)));
+  target.k=k;
+  target.x=RW+20+(availW-(b.x2-b.x1)*k)/2-b.x1*k;
+  target.y=HH+10+(availH-(b.y2-b.y1)*k)/2-b.y1*k;
+  if(instant){Object.assign(view,target);applyView();}
+  else ensureMotion();
+}
+function zoomAt(sx,sy,f){
+  userMoved=true;
+  const k2=clampK(target.k*f);
+  const wx=(sx-target.x)/target.k, wy=(sy-target.y)/target.k;
+  target.k=k2;target.x=sx-wx*k2;target.y=sy-wy*k2;
+  ensureMotion();
+}
+// encuadre inteligente: árbol completo si cabe legible; si no, la cabecera con Pablo
+function fitTree(instant){
+  const RW=innerWidth<=640?56:78;
+  const availW=innerWidth-RW-40;
+  const kFull=Math.min(availW/(treeBounds.x2-treeBounds.x1+80),(innerHeight-126)/(treeBounds.y2-treeBounds.y1+80));
+  if(kFull>=0.12){fitBounds(treeBounds,40,instant);return;}
+  const c=pos[G.root];
+  const w2=Math.max((availW/0.5)/2,620);
+  fitBounds({x1:c.x-w2,x2:c.x+w2,y1:rowY[0]-150,y2:rowY[2]+90},20,instant);
+}
+// ratón / táctil
+let drag=null;const pointers=new Map();
+stage.addEventListener('pointerdown',e=>{
+  stage.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  vel.x=vel.y=0;
+  if(pointers.size===1)drag={sx:e.clientX,sy:e.clientY,vx:target.x,vy:target.y,lx:e.clientX,ly:e.clientY,lt:performance.now(),moved:false,tgt:e.target};
+  else drag=null;
+});
+stage.addEventListener('pointermove',e=>{
+  if(!pointers.has(e.pointerId))return;
+  const prev=pointers.get(e.pointerId);
+  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pointers.size===2){
+    const[a,b]=[...pointers.values()];
+    const pd=Math.hypot(a.x-b.x,a.y-b.y);
+    if(!stage._pd){stage._pd=pd;return;}
+    const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+    zoomAt(mid.x,mid.y,pd/stage._pd);stage._pd=pd;
+    return;
+  }
+  if(!drag)return;
+  const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+  if(Math.abs(dx)+Math.abs(dy)>4){drag.moved=true;userMoved=true;stage.classList.add('dragging');}
+  target.x=drag.vx+dx;target.y=drag.vy+dy;
+  view.x=target.x;view.y=target.y;applyView();
+  const now=performance.now(),dt=Math.max(now-drag.lt,1);
+  vel.x=(e.clientX-drag.lx)/dt*14;vel.y=(e.clientY-drag.ly)/dt*14;
+  drag.lx=e.clientX;drag.ly=e.clientY;drag.lt=now;
+});
+function endPointer(e){
+  pointers.delete(e.pointerId);stage._pd=null;
+  if(drag&&!drag.moved){vel.x=vel.y=0;handleTap({target:drag.tgt});}
+  else if(reduced){vel.x=vel.y=0;}
+  drag=null;stage.classList.remove('dragging');
+}
+stage.addEventListener('pointerup',endPointer);
+stage.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);stage._pd=null;vel.x=vel.y=0;drag=null;stage.classList.remove('dragging');});
+stage.addEventListener('wheel',e=>{
+  e.preventDefault();
+  if(e.ctrlKey||Math.abs(e.deltaY)>Math.abs(e.deltaX)){zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0016));}
+  else{target.x-=e.deltaX;}
+},{passive:false});
+stage.addEventListener('dblclick',e=>{zoomAt(e.clientX,e.clientY,1.7);});
+addEventListener('resize',()=>{
+  if(!userMoved&&lastFit)fitBounds(lastFit.b,lastFit.pad,true);
+  else applyView();
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(document.querySelector('#reader.open'))return;
+  if(e.key==='Escape'){
+    // cerrar solo la capa superior: el modal conserva la ficha que hay detrás
+    if(document.querySelector('#modal.open'))closeModal();
+    else closePanel();
+  }
+  if(e.key==='+'||e.key==='=')zoomAt(innerWidth/2,innerHeight/2,1.25);
+  if(e.key==='-')zoomAt(innerWidth/2,innerHeight/2,0.8);
+  if(e.key==='0')fitTree();
+});
+function handleTap(e){
+  const g=e.target.closest&&e.target.closest('.card');
+  if(g)selectPerson(g.getAttribute('data-id'));
+  else{closePanel();}
+}
+$('#zoomctl').addEventListener('click',e=>{
+  const b=e.target.closest('.zbtn');if(!b)return;
+  const a=b.getAttribute('data-z');
+  if(a==='in')zoomAt(innerWidth/2,innerHeight/2,1.3);
+  if(a==='out')zoomAt(innerWidth/2,innerHeight/2,0.77);
+  if(a==='fit')fitBounds(worldBounds,30);
+});
+
+/* ================= regla temporal ================= */
+const ruler=$('#ruler'),rc=$('#rcontent');
+function drawRuler(){
+  const RW=innerWidth<=640?56:78;
+  ruler.setAttribute('width',RW);ruler.setAttribute('height',innerHeight);ruler.style.width=RW+'px';
+  rc.innerHTML='';
+  el('rect',{class:'rbg',x:0,y:0,width:RW,height:innerHeight},rc);
+  el('line',{class:'redge',x1:RW-1,y1:0,x2:RW-1,y2:innerHeight},rc);
+  const yTop=(0-view.y)/view.k, yBot=(innerHeight-view.y)/view.k;
+  let y1=Math.max(yToYear(yTop),1648),y2=Math.min(yToYear(yBot),2032);
+  if(!isFinite(y1)||!isFinite(y2)||y1>=y2)return;
+  const span=y2-y1;
+  const step=span>460?50:span>230?25:10;
+  const minor=step/5;
+  const start=Math.floor(y1/minor)*minor;
+  for(let yr=start;yr<=y2;yr+=minor){
+    const sy=yearToY(yr)*view.k+view.y;
+    if(sy<70||sy>innerHeight-8)continue;
+    const isMajor=Math.round(yr)%step===0;
+    el('line',{class:'tick'+(isMajor?'':' minor'),x1:RW-(isMajor?16:9),y1:sy,x2:RW-1,y2:sy},rc);
+    if(isMajor){const t=el('text',{class:'tlab',x:RW-21,y:sy+4,'text-anchor':'end'},rc);t.textContent=Math.round(yr);}
+  }
+  // numerales de generación (sin solaparse)
+  let lastChip=-1e9;
+  for(const a of anchors){
+    const sy=rowY[a.g]*view.k+view.y;
+    if(sy<74||sy>innerHeight-10||sy-lastChip<26)continue;
+    lastChip=sy;
+    const chip=el('g',{class:'gchipg'},rc);
+    el('rect',{class:'gchip',x:3,y:sy-10,width:26,height:20,rx:10},chip);
+    const t=el('text',{class:'glab',x:16,y:sy+4,'text-anchor':'middle'},chip);t.textContent=ROMAN[a.g];
+  }
+}
+
+/* ================= minimapa ================= */
+const mm=$('#minimap'),mmc=mm.querySelector('canvas'),mctx=mmc.getContext('2d');
+const MMW=208,MMH=138;mmc.width=MMW*2;mmc.height=MMH*2;mctx.scale(2,2);
+const mmPad=8;
+const mmK=Math.min((MMW-mmPad*2)/(worldBounds.x2-worldBounds.x1),(MMH-mmPad*2)/(worldBounds.y2-worldBounds.y1));
+const mmX=w=>mmPad+(w-worldBounds.x1)*mmK, mmY=w=>mmPad+(w-worldBounds.y1)*mmK;
+function drawMinimap(){
+  if(innerWidth<=640)return;
+  mctx.clearRect(0,0,MMW,MMH);
+  mctx.fillStyle='rgba(107,87,61,.65)';
+  for(const id in pos){const c=pos[id];mctx.fillRect(mmX(c.x-CW/2),mmY(c.y-CH/2),Math.max(CW*mmK,2),Math.max(CH*mmK,1.4));}
+  const wx1=(0-view.x)/view.k, wy1=(0-view.y)/view.k;
+  const wx2=(innerWidth-view.x)/view.k, wy2=(innerHeight-view.y)/view.k;
+  mctx.strokeStyle='#6B1E2B';mctx.lineWidth=1.4;
+  mctx.strokeRect(mmX(wx1),mmY(wy1),(wx2-wx1)*mmK,(wy2-wy1)*mmK);
+}
+function mmGo(e){
+  const r=mm.getBoundingClientRect();
+  const wx=(e.clientX-r.left-mmPad)/mmK+worldBounds.x1;
+  const wy=(e.clientY-r.top-mmPad)/mmK+worldBounds.y1;
+  target.x=innerWidth/2-wx*target.k;target.y=innerHeight/2-wy*target.k;
+  userMoved=true;ensureMotion();
+}
+mm.addEventListener('pointerdown',e=>{mm.setPointerCapture(e.pointerId);mmGo(e);mm._d=1;});
+mm.addEventListener('pointermove',e=>{if(mm._d)mmGo(e);});
+mm.addEventListener('pointerup',()=>mm._d=0);
+
+/* ================= selección + línea de sucesión ================= */
+let selected=null,panelOpen=false;
+const selglow=$('#selglow');
+function lineageOf(pid){
+  // asciende por el progenitor que continúa la sangre (el que tiene famc), sea padre o madre
+  const chainP=new Set([pid]),chainF=new Set();
+  let cur=pid;
+  while(cur&&P[cur]&&P[cur].famc&&F[P[cur].famc]){
+    const f=F[P[cur].famc];chainF.add(f.id);
+    if(f.husband&&P[f.husband])chainP.add(f.husband);
+    if(f.wife&&P[f.wife])chainP.add(f.wife);
+    cur=(f.husband&&P[f.husband]&&P[f.husband].famc)?f.husband
+       :((f.wife&&P[f.wife]&&P[f.wife].famc)?f.wife:null);
+  }
+  return{chainP,chainF};
+}
+function setFocus(pid){
+  world.classList.remove('focus');
+  world.querySelectorAll('.lit').forEach(e=>e.classList.remove('lit'));
+  if(!pid)return;
+  const{chainP,chainF}=lineageOf(pid);
+  if(chainP.size<2)return; // sin línea que iluminar
+  world.classList.add('focus');
+  for(const id of chainP)cardElems[id]&&cardElems[id].classList.add('lit');
+  for(const fid of chainF)(famElems[fid]||[]).forEach(e=>{
+    if(e.classList.contains('link')){
+      const dc=e.getAttribute('data-child');
+      if(!dc||chainP.has(dc))e.classList.add('lit');
+    }else e.classList.add('lit');
+  });
+}
+function selectPerson(pid,noZoom){
+  selected=pid;
+  const c=pos[pid];
+  if(c){
+    selglow.setAttribute('x',c.x-CW/2-5);selglow.setAttribute('y',c.y-CH/2-5);
+    selglow.setAttribute('width',CW+10);selglow.setAttribute('height',CH+10);
+    selglow.setAttribute('rx',5);selglow.classList.add('on');
+    if(!noZoom){
+      const k=Math.max(target.k,0.85);
+      target.k=clampK(k);
+      const px=innerWidth>900?(innerWidth-440)/2+(innerWidth<=640?28:39):(innerWidth)/2;
+      target.x=px-c.x*target.k;
+      target.y=(innerHeight)/2+20-c.y*target.k;
+      ensureMotion();
+    }
+  }
+  setFocus(pid);
+  openPanel(pid);
+  try{history.replaceState(null,'','#'+pid.replace(/@/g,''));}catch(e){}
+}
+function closePanel(){
+  panelOpen=false;$('#panel').classList.remove('open');
+  selglow.classList.remove('on');setFocus(null);selected=null;
+  try{history.replaceState(null,'',location.pathname);}catch(e){}
+}
+$('#pclose').addEventListener('click',closePanel);
+
+/* ================= panel de ficha ================= */
+// apuntes de esta edición (no proceden del GEDCOM): el origen del proyecto
+const APP_NOTES={
+  '@I61@':'La tarde de 2026 en que visitó a su abuela María Teresa y conoció el manuscrito familiar desencadenó esta reconstrucción: suya fue la curiosidad, y la inteligencia artificial, su linterna. Véase el preliminar de «La casa de la piedra».',
+  '@I32@':'Custodia del esquema manuscrito del mayorazgo. Su tarde con su nieto Guillermo, en 2026, puso en marcha esta edición digital del árbol.',
+};
+const fleuron=`<svg viewBox="0 0 120 12" preserveAspectRatio="xMidYMid meet"><g stroke="#8C6D3F" fill="none" stroke-width="1"><path d="M0,6 C20,2 40,2 52,6"/><path d="M120,6 C100,2 80,2 68,6"/><circle cx="60" cy="6" r="2.6" fill="#C9A24A" stroke="none"/><path d="M55,6 Q60,1 65,6 Q60,11 55,6" fill="none"/></g></svg>`;
+function sealHTML(g,size){return `<span class="seal g-${g||'X'}">${g||'·'}</span>`;}
+function relCard(pid,extra){
+  const p=P[pid];if(!p)return'';
+  return `<button class="pcard" data-go="${pid}"><span class="n">${esc(p.name)}${extra?` <span style="font-weight:400;font-style:italic;font-size:12.5px;color:var(--ink-3)">${extra}</span>`:''}</span><span class="y">${esc(yearsOf(p))}</span></button>`;
+}
+function sec(label,inner){return inner?`<div class="sec"><div class="sechdr"><span class="l">${label}</span>${fleuron}</div>${inner}</div>`:'';}
+function openPanel(pid){
+  const p=P[pid];if(!p)return;
+  const body=$('#pbody');
+  const isMain=G.mainIds.includes(pid);
+  const genLab=p.gen!=null?`GENERACIÓN ${ROMAN[p.gen]}`:'COLATERAL';
+  const kind=isMain?(p.famc||pid===G.root?'TRONCO':'CÓNYUGE'):'SIN ENLACE PROBADO';
+  let html=`<div class="pk">${genLab} · ${kind}</div>
+    <div class="pname">${esc(p.name)}</div>`;
+  if(p.altNames.length)html+=`<div style="font-style:italic;font-size:14px;color:var(--ink-3)">también ${esc(p.altNames.join(' · '))}</div>`;
+  const vital=[];
+  if(p.birth&&(p.birth.text||p.birth.place))vital.push(`<span class="g">n.</span> ${esc(p.birth.text||'')}${p.birth.place?' · '+esc(p.birth.place):''}`);
+  if(p.death)vital.push(`<span class="g">†</span> ${esc(p.death.text||'fecha desconocida')}${p.death.place?' · '+esc(p.death.place):''}`);
+  if(p.residences.length)vital.push(`<span class="g">res.</span> ${esc(p.residences.join(' · '))}`);
+  if(vital.length)html+=`<div class="pvital">${vital.join('<br>')}</div>`;
+  if(p.grade||p.estado)html+=`<div class="badge">${sealHTML(p.grade)}<span class="tx">${esc(p.estado||gradeName(p.grade))}</span></div>`;
+  if(APP_NOTES[pid])html+=`<div class="orignote">${esc(APP_NOTES[pid])}</div>`;
+  // oficios
+  const chips=[...p.occupations,...p.titles].map(o=>`<span class="chip">${esc(o)}</span>`).join('');
+  html+=sec('OFICIOS Y CARGOS',chips?`<div class="chips">${chips}</div>`:'');
+  // hechos
+  if(p.events.length){
+    html+=sec('HECHOS DOCUMENTADOS',p.events.map(e=>`<div class="ev"><div class="d">${esc(e.date||'')}${e.type&&e.type!=='Hecho documentado'?' · '+esc(e.type):''}</div><div class="t">${esc((e.notes||[]).join(' — '))}</div></div>`).join(''));
+  }
+  // crónica
+  if(p.notes.length)html+=sec('CRÓNICA',p.notes.map(n=>`<p class="note">${esc(n)}</p>`).join(''));
+  // familia
+  let fam='';
+  if(p.famc&&F[p.famc]){
+    const f=F[p.famc];
+    const par=[f.husband,f.wife].filter(x=>x&&P[x]);
+    if(par.length)fam+=`<div class="rel"><div class="rk">PADRES</div>${par.map(x=>relCard(x)).join('')}</div>`;
+    const sibs=f.children.filter(c=>c!==pid&&P[c]);
+    if(sibs.length)fam+=`<div class="rel"><div class="rk">HERMANOS</div>${sibs.map(x=>relCard(x)).join('')}</div>`;
+    if(f.notes.length||(!par.length&&f.grade))
+      fam+=`<div class="unote">${esc(f.notes.join(' '))}${f.grade?` (evidencia de la unidad familiar: ${f.grade})`:''}</div>`;
+  }
+  p.fams.forEach((fid,i)=>{
+    const f=F[fid];if(!f)return;
+    const sp=f.husband===pid?f.wife:f.husband;
+    let u=`<div class="rel"><div class="rk">${p.fams.length>1?(i+1)+'.ª UNIÓN':'UNIÓN'}${f.grade?` · EVIDENCIA ${f.grade}`:''}</div>`;
+    if(f.marriage&&(f.marriage.text||f.marriage.place))u+=`<div class="uhead">matrimonio ${esc(f.marriage.text||'')}${f.marriage.place?' · '+esc(f.marriage.place):''}</div>`;
+    if(sp&&P[sp])u+=relCard(sp);
+    if(f.notes.length)u+=`<div class="unote">${esc(f.notes.join(' '))}</div>`;
+    const kids=f.children.filter(c=>P[c]);
+    if(kids.length)u+=`<div class="rk" style="margin-top:8px">HIJOS</div>`+kids.map(k=>relCard(k)).join('');
+    fam+=u+'</div>';
+  });
+  html+=sec('FAMILIA',fam);
+  // en la novela
+  const chapKeys=(typeof NOVEL!=='undefined'&&NOVEL.byPerson[pid])||[];
+  if(chapKeys.length){
+    html+=sec('EN LA NOVELA',`<div class="chips">`+chapKeys.map(k=>{
+      const s=NOVEL.sections.find(x=>x.key===k);
+      return `<button class="rpchip" data-chap="${k}">${esc(s.num)} · ${esc(s.title)}</button>`;
+    }).join('')+`</div><div style="font-size:12.5px;font-style:italic;color:var(--ink-3);margin-top:10px">de «La casa de la piedra», crónica novelada de la familia</div>`);
+  }
+  // fuentes
+  const refs=[...new Set([...p.sources,...p.events.flatMap(e=>e.sources||[])])];
+  if(refs.length){
+    html+=sec('FUENTES',refs.map(r=>{
+      const s=S[r];if(!s)return'';
+      return `<div class="src"><div class="st">${sealHTML(s.grade)}<div><div class="tt">${esc(s.title||'')}</div><div class="au">${esc([s.author,s.publication].filter(Boolean).join(' · '))}</div></div></div>${s.text?`<div class="tx">${esc(s.text)}</div>`:''}${s.urls.map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">Ver documento ${s.urls.length>1?j+1:''} ↗</a>`).join('')}</div>`;
+    }).join(''));
+  }
+  body.innerHTML=html;
+  body.scrollTop=0;
+  body.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>selectPerson(b.getAttribute('data-go'))));
+  body.querySelectorAll('[data-chap]').forEach(b=>b.addEventListener('click',()=>openReader(b.getAttribute('data-chap'))));
+  panelOpen=true;$('#panel').classList.add('open');
+}
+
+/* ================= búsqueda ================= */
+const searchIx=Object.values(P).map(p=>({id:p.id,n:norm(p.name+' '+(p.altNames||[]).join(' ')),p}));
+const sIn=$('#search'),sRes=$('#sresults');
+let sAct=-1,sItems=[];
+function doSearch(){
+  const q=norm(sIn.value.trim());
+  sRes.innerHTML='';sAct=-1;sItems=[];
+  if(q.length<2){sRes.classList.remove('open');return;}
+  const hits=searchIx.filter(e=>e.n.includes(q)).slice(0,8);
+  if(!hits.length){sRes.classList.remove('open');return;}
+  hits.forEach(hit=>{
+    const d=h('div','it',`<span class="n">${esc(hit.p.name)}</span><span class="y">${esc(yearsOf(hit.p))}${hit.p.gen!=null?' · gen. '+ROMAN[hit.p.gen]:' · colateral'}</span>`);
+    d.addEventListener('click',()=>{selectPerson(hit.id);sRes.classList.remove('open');sIn.blur();});
+    sRes.appendChild(d);sItems.push({d,id:hit.id});
+  });
+  sRes.classList.add('open');
+}
+sIn.addEventListener('input',doSearch);
+sIn.addEventListener('focus',doSearch);
+sIn.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    sAct=(sAct+(e.key==='ArrowDown'?1:-1)+sItems.length)%Math.max(sItems.length,1);
+    sItems.forEach((it,i)=>it.d.classList.toggle('act',i===sAct));
+  }else if(e.key==='Enter'&&sItems.length){
+    const it=sItems[Math.max(sAct,0)];selectPerson(it.id);sRes.classList.remove('open');sIn.blur();
+  }else if(e.key==='Escape'){sRes.classList.remove('open');sIn.blur();}
+});
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#searchwrap'))sRes.classList.remove('open');});
+
+/* ================= lector de la novela ================= */
+const reader=$('#reader'),rpage=$('#rpage'),rtoc=$('#rtoc');
+let rIdx=0;
+if(typeof NOVEL!=='undefined'){
+  NOVEL.sections.forEach((s,i)=>{
+    const o=document.createElement('option');o.value=i;o.textContent=`${s.num} · ${s.title}`;rtoc.appendChild(o);
+  });
+  rtoc.addEventListener('change',()=>renderChapter(+rtoc.value));
+  $('#rprev').addEventListener('click',()=>renderChapter(rIdx-1));
+  $('#rnext').addEventListener('click',()=>renderChapter(rIdx+1));
+  $('#rclose').addEventListener('click',closeReader);
+}
+function renderChapter(i){
+  if(i<0||i>=NOVEL.sections.length)return;
+  rIdx=i;rtoc.value=i;
+  const s=NOVEL.sections[i];
+  const isCap=/^[IVX]+$/.test(s.num);
+  let html=`<div class="rhead">
+    <div class="rnum${isCap?'':' small'}">${esc(s.num.toUpperCase())}</div>
+    <div class="rtitle">${esc(s.title)}</div>
+    ${s.context?`<div class="rctx">${esc(s.context)}</div>`:''}
+    ${fleuron}
+  </div>`;
+  html+=s.paras.map((p,j)=>`<p class="rp${j===0?' first':''}">${esc(p)}</p>`).join('');
+  if(s.nota){
+    html+=`<div class="rnota"><div class="nl">NOTA DOCUMENTAL</div><div class="nt">${esc(s.nota.text)}</div>`+
+      s.nota.refs.map(r=>{
+        const src=S[r.sid];const url=src&&src.urls&&src.urls[0];
+        return `<div class="rref"><span class="rid">${esc(r.sid.replace(/@/g,''))}</span><span><span class="rt">${esc(r.title)}</span> <span class="rm">${esc(r.meta)}</span>${url?`<a href="${esc(url)}" target="_blank" rel="noopener">ver ↗</a>`:''}</span></div>`;
+      }).join('')+`</div>`;
+  }
+  const ids=(NOVEL.byChapter[s.key]||[]).filter(id=>P[id]);
+  if(ids.length){
+    html+=`<div class="rpersons"><div class="pl">EN EL ÁRBOL</div><div class="chips">`+
+      ids.map(id=>`<button class="rpchip" data-rp="${id}">${esc(P[id].name)}</button>`).join('')+`</div></div>`;
+  }
+  rpage.innerHTML=html;
+  rpage.querySelectorAll('[data-rp]').forEach(b=>b.addEventListener('click',()=>{closeReader();selectPerson(b.getAttribute('data-rp'));}));
+  $('#rprev').toggleAttribute('disabled',i===0);
+  $('#rnext').toggleAttribute('disabled',i===NOVEL.sections.length-1);
+  $('#rscroll').scrollTop=0;
+}
+function openReader(key){
+  const i=typeof key==='number'?key:Math.max(0,NOVEL.sections.findIndex(s=>s.key===key));
+  renderChapter(i);
+  reader.classList.add('open');
+}
+function closeReader(){reader.classList.remove('open');}
+document.addEventListener('keydown',e=>{
+  if(!reader.classList.contains('open')||e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+  if(e.key==='Escape')closeReader();
+  if(e.key==='ArrowLeft')renderChapter(rIdx-1);
+  if(e.key==='ArrowRight')renderChapter(rIdx+1);
+});
+
+/* ================= modales ================= */
+const modal=$('#modal'),mbody=$('#mbody'),mtitle=$('#mhead .mt');
+function openModal(title,html){mtitle.textContent=title;mbody.innerHTML=html;modal.classList.add('open');mbody.scrollTop=0;/* tras .open: si no, el navegador restaura el scroll anterior */}
+function closeModal(){modal.classList.remove('open');}
+$('#mclose').addEventListener('click',closeModal);
+modal.querySelector('.veil').addEventListener('click',closeModal);
+
+function legendHTML(){
+  const line=(cls,label)=>`<div class="legrow"><svg viewBox="0 0 74 10"><path class="link ${cls}" d="M2,5 H72" style="stroke:${cls==='gD'||cls==='gE'?'#6B573D':'#4A3B28'}"${cls==='gD'?' stroke-dasharray="7 5"':''}${cls==='gE'?' stroke-dasharray="2 5" stroke-linecap="round"':''}/></svg><div class="d">${label}</div></div>`;
+  return `
+  <p class="lead">Este árbol distingue con precisión lo probado de lo transmitido. Cada persona, cada matrimonio y cada filiación lleva su <em>grado de evidencia</em>, heredado del estudio documental que lo sostiene.</p>
+  <h3>ESCALA DE EVIDENCIA</h3>
+  <div class="legrow"><span class="seal g-A">A</span><div class="d"><strong>Fuente primaria u oficial</strong> — partidas, expedientes, BOE, archivos estatales.</div></div>
+  <div class="legrow"><span class="seal g-B">B</span><div class="d"><strong>Autoridad institucional</strong> o fuente contemporánea solvente.</div></div>
+  <div class="legrow"><span class="seal g-C">C</span><div class="d"><strong>Fuente secundaria</strong> — prensa, memorialística o índice genealógico.</div></div>
+  <div class="legrow"><span class="seal g-D">D</span><div class="d"><strong>Tradición familiar</strong> — el esquema manuscrito del mayorazgo.</div></div>
+  <div class="legrow"><span class="seal g-E">E</span><div class="d"><strong>Inferencia</strong> del investigador; pista por comprobar.</div></div>
+  <h3>TRAZOS DE FILIACIÓN</h3>
+  ${line('','Trazo continuo — unidad familiar documentada (A / B).')}
+  ${line('gC','Trazo fino — evidencia secundaria (C).')}
+  ${line('gD','Trazo discontinuo — tradición familiar (D).')}
+  ${line('gE','Trazo punteado — hipótesis o inferencia (E).')}
+  <h3>NAVEGACIÓN</h3>
+  <p>Arrastre el lienzo para desplazarse y use la rueda —o los botones <kbd>+</kbd> <kbd>−</kbd>— para acercarse. Pulse sobre cualquier cartucho para abrir su ficha completa: al hacerlo, la <strong style="color:var(--gA)">línea de sucesión hasta Pablo</strong> se ilumina en oro y el resto del árbol se atenúa. La regla de la izquierda marca los años; los numerales romanos, las diez generaciones. El doble clic acerca; la tecla <kbd>0</kbd> devuelve la vista del tronco completo.</p>
+  <p>En el margen derecho del lienzo, el <em>Gabinete de colaterales</em> reúne a los Escohotado y Greciano documentados en Galapagar sin enlace probado con este tronco.</p>`;
+}
+function aboutHTML(){
+  const m=G.meta;
+  const paras=m.notes.map(n=>`<p>${esc(n)}</p>`).join('');
+  return `<p class="lead">Esta edición digital nació una tarde de 2026, cuando Guillermo Guerra visitó a su abuela, María Teresa Escohotado, y ella le enseñó el esquema manuscrito del mayorazgo. De su curiosidad —y de la inteligencia artificial que usó como linterna en los archivos— salieron la base de datos genealógica, esta aplicación y la crónica novelada «La casa de la piedra».</p>
+  ${paras}
+  <h3>LA SÍNTESIS EN CIFRAS</h3>
+  <p>${m.counts.people} personas · ${m.counts.families} unidades familiares · ${m.counts.sources} fuentes documentales · 10 generaciones (1685 – 2026).</p>
+  <p style="font-style:italic;color:var(--ink-3)">Impulso y relato: Guillermo Guerra Ortiz · Compilación documental: Néstor Guerra Escohotado · síntesis final 3.0 · 28 de julio de 2026.</p>`;
+}
+function sourcesHTML(){
+  const list=Object.values(S).sort((a,b)=>+a.id.replace(/\D/g,'')-+b.id.replace(/\D/g,''));
+  return `<p class="lead">Cuarenta y cuatro fuentes sostienen esta síntesis: del esquema manuscrito del mayorazgo a los expedientes del Archivo Histórico Nacional y el Boletín Oficial del Estado. Cada una lleva su sello de calidad.</p>`+
+  list.map(s=>`<div class="src"><div class="st">${sealHTML(s.grade)}<div><div class="tt">${esc(s.title||'')}</div><div class="au">${esc([s.author,s.publication].filter(Boolean).join(' · '))}</div></div></div>${s.text?`<div class="tx">${esc(s.text)}</div>`:''}${s.urls.map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">Ver documento ${s.urls.length>1?j+1:''} ↗</a>`).join('')}</div>`).join('');
+}
+$('#navbtns').addEventListener('click',e=>{
+  const b=e.target.closest('.hbtn');if(!b)return;
+  const a=b.getAttribute('data-act');
+  if(a==='tree'){closePanel();fitTree();}
+  if(a==='annex'){closePanel();fitBounds({x1:AX,y1:AY,x2:AX+annexBounds.w,y2:AY+annexBounds.h},30);}
+  if(a==='novel')openReader(0);
+  if(a==='legend')openModal('Cómo leer el árbol',legendHTML());
+  if(a==='about')openModal('Acerca de esta síntesis',aboutHTML());
+  if(a==='sources')openModal('Fuentes documentales',sourcesHTML());
+});
+$('#wordmark').addEventListener('click',()=>{closePanel();fitTree();});
+$('#wordmark').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();closePanel();fitTree();}});
+
+/* ================= intro / loader / crecimiento ================= */
+const m=G.meta;
+$('#istats').innerHTML=[
+  [m.counts.people,'PERSONAS'],[10,'GENERACIONES'],[m.counts.families,'FAMILIAS'],[m.counts.sources,'FUENTES']
+].map(([v,k])=>`<div class="st"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
+
+if(!reduced)world.classList.add('grow');
+fitTree(true);
+
+const loader=$('#loader'),intro=$('#intro');
+Promise.all([document.fonts?document.fonts.ready:Promise.resolve(),new Promise(r=>setTimeout(r,reduced?150:1400))]).then(()=>{
+  fitAllTexts();
+  if(!userMoved)fitTree(true);
+  loader.classList.add('hide');
+  intro.style.visibility='visible';intro.classList.remove('hide');
+});
+$('#enter').addEventListener('click',()=>{
+  intro.classList.add('hide');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    world.classList.add('grown');
+    setTimeout(()=>{
+      world.classList.remove('grow','grown');
+      // remata transiciones que un navegador con animaciones suspendidas dejara a medias
+      try{document.getAnimations().forEach(a=>{if(a instanceof CSSTransition){try{a.finish()}catch(e){a.cancel()}}});}catch(e){}
+    },reduced?0:4200);
+  }));
+  // enlace profundo
+  const hash=location.hash.replace('#','');
+  if(hash){const pid='@'+hash+'@';if(P[pid])setTimeout(()=>selectPerson(pid),reduced?100:2500);}
+});
+
+applyView();
+tick();
+</script>
+</body>
+</html>

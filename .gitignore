@@ -1,0 +1,8 @@
+.claude/
+.DS_Store
+arbol.ged
+build-*.js
+data.json
+novela-layout.txt
+novela.txt
+parse.js
