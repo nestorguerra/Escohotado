@@ -562,7 +562,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   <button class="mitem" data-act="modecanvas" id="mi-canvas">Lienzo completo <span class="hint">todo el árbol</span></button>
   <div class="mgrp">CONTENIDOS</div>
   <button class="mitem" data-act="novel">La novela <span class="hint">«La casa de la piedra»</span></button>
-  <button class="mitem" data-act="sources">Fuentes <span class="hint">44 documentos</span></button>
+  <button class="mitem" data-act="sources">Fuentes <span class="hint">los documentos</span></button>
   <div class="mgrp">INFORMACIÓN</div>
   <button class="mitem" data-act="legend">Cómo leer el árbol</button>
   <button class="mitem" data-act="about">Acerca de esta edición</button>
@@ -645,8 +645,8 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   <div class="sub">Grabando el árbol…</div>
 </div>
 
-<script src="tree-data.js?v=1.2"></script>
-<script src="novel-data.js?v=1.2"></script>
+<script src="tree-data.js?v=1.2.1"></script>
+<script src="novel-data.js?v=1.2.1"></script>
 <script>
 'use strict';
 /* ================= utilidades ================= */
@@ -1535,7 +1535,7 @@ function aboutHTML(){
 }
 function sourcesHTML(){
   const list=Object.values(S).sort((a,b)=>+a.id.replace(/\D/g,'')-+b.id.replace(/\D/g,''));
-  return `<p class="lead">Cuarenta y cuatro fuentes sostienen esta síntesis: del esquema manuscrito del mayorazgo a los expedientes del Archivo Histórico Nacional y el Boletín Oficial del Estado. Cada una lleva su sello de calidad.</p>`+
+  return `<p class="lead">Estas ${list.length} fuentes sostienen la síntesis: del esquema manuscrito del mayorazgo a los expedientes del Archivo Histórico Nacional y el Boletín Oficial del Estado. Cada una lleva su sello de calidad.</p>`+
   list.map(s=>`<div class="src"><div class="st">${sealHTML(s.grade)}<div><div class="tt">${esc(s.title||'')}</div><div class="au">${esc([s.author,s.publication].filter(Boolean).join(' · '))}</div></div></div>${s.text?`<div class="tx">${esc(s.text)}</div>`:''}${s.urls.map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">Ver documento ${s.urls.length>1?j+1:''} ↗</a>`).join('')}</div>`).join('');
 }
 /* ================= edición, novedades y exportación ================= */
@@ -1544,7 +1544,7 @@ $('#verline').textContent='edición '+APP_META.version+' · '+APP_META.date;
 function changelogHTML(){
   return `<p class="lead">Registro de cambios de esta edición digital.</p>
   <h3>VERSIÓN 1.2 · 29 DE JULIO DE 2026</h3>
-  <p>Se incorpora Patti Lin, esposa de Aday Guerra Escohotado, por testimonio familiar directo (evidencia D) · corregido el cierre de la guía de tres pasos.</p>
+  <p>Se incorpora Patty Lin, esposa de Aday Guerra Escohotado, por testimonio familiar directo (evidencia D) y su perfil profesional como fuente (S45) · corregido el cierre de la guía de tres pasos.</p>
   <h3>VERSIÓN 1.1 · 29 DE JULIO DE 2026</h3>
   <p>Navegación reorganizada con el selector Tronco / Colaterales y menú de información · fichas por pestañas (Resumen, Vida, Familia, Fuentes, Novela) con referencias de fuente en cada hecho · enlace directo copiable e impresión de fichas · navegación por rama en el móvil · leyenda compacta de evidencias y guía de tres pasos · años con horquilla visibles en los cartuchos («h. 1685», «1729–89») · exportación del lienzo en SVG · mejoras de accesibilidad (teclado, foco, contraste).</p>
   <h3>VERSIÓN 1.0 · 28 DE JULIO DE 2026</h3>
