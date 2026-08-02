@@ -345,6 +345,24 @@ body.branchmode #stage,body.branchmode #ruler,body.branchmode #zoomctl,body.bran
 .src a{display:inline-block;margin:8px 8px 0 0;font-family:var(--caps);font-size:11px;letter-spacing:.08em;
   color:var(--wine);text-decoration:none;border:1px solid rgba(140,109,63,.55);border-radius:2px;padding:4px 10px 3px;transition:all .2s}
 .src a:hover{border-color:var(--gold);background:rgba(201,162,74,.12)}
+.research-card{position:relative;margin:18px 0 22px;padding:19px 21px 18px;border:1px solid var(--gold);
+  background:linear-gradient(135deg,rgba(255,252,242,.72),rgba(201,162,74,.1));box-shadow:inset 0 0 0 4px rgba(246,237,216,.7)}
+.research-card .eyebrow{font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--wine);margin-bottom:7px}
+.research-card .big{font-family:var(--serif);font-size:20px;line-height:1.25;color:var(--ink);margin-bottom:7px}
+.research-card .small{font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.research-card a,.report-link{display:inline-block;margin-top:11px;font-family:var(--caps);font-size:11.5px;letter-spacing:.08em;
+  color:var(--wine);text-decoration:none;border-bottom:1px solid rgba(103,43,36,.35);padding-bottom:2px}
+.source-tools{position:sticky;top:-8px;z-index:2;margin:16px 0 18px;padding:12px;background:rgba(246,237,216,.96);
+  border-top:1px solid rgba(140,109,63,.35);border-bottom:1px solid rgba(140,109,63,.35);backdrop-filter:blur(8px)}
+.source-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
+.source-filter button{min-width:44px;min-height:40px;padding:7px 11px 6px;border:1px solid rgba(140,109,63,.48);border-radius:2px;
+  background:rgba(255,252,242,.65);color:var(--ink-2);cursor:pointer;font-family:var(--caps);font-size:11px;letter-spacing:.08em}
+.source-filter button.active,.source-filter button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.source-search{width:100%;min-height:44px;padding:10px 12px;border:1px solid rgba(140,109,63,.55);border-radius:2px;
+  background:rgba(255,252,242,.78);color:var(--ink);font:15px var(--body);outline:none}
+.source-search:focus{border-color:var(--wine);box-shadow:0 0 0 2px rgba(103,43,36,.14)}
+.source-count{margin-top:7px;font-size:12px;font-style:italic;color:var(--ink-3)}
+.source-empty{padding:28px 10px;text-align:center;font-style:italic;color:var(--ink-3)}
 .g-A{background:var(--gA)}.g-B{background:var(--gB)}.g-C{background:var(--gC)}.g-D{background:var(--gD)}.g-E{background:var(--gE)}.g-X{background:var(--ink-4)}
 
 /* --- modales -------------------------------------------------------------- */
@@ -397,6 +415,9 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 .rhead .rctx{font-family:var(--caps);font-size:13px;letter-spacing:.26em;color:var(--bronze);margin-top:14px}
 .rhead .rlit{font-family:var(--caps);font-size:10px;letter-spacing:.2em;color:var(--gA);margin-top:12px}
 .rhead svg{margin-top:18px;width:150px;height:14px}
+.novel-freeze{margin:0 0 30px;padding:12px 15px;border-left:2px solid var(--wine);background:rgba(103,43,36,.055);
+  font-size:13px;line-height:1.55;color:var(--ink-2)}
+.novel-freeze strong{font-family:var(--caps);font-weight:400;font-size:10.5px;letter-spacing:.13em;color:var(--wine)}
 .rp{font-size:17.5px;line-height:1.74;color:var(--ink-2);margin-bottom:17px;text-align:justify;hyphens:auto}
 .rp.first::first-letter{font-family:var(--display);font-size:340%;line-height:.78;color:var(--wine);float:left;padding:6px 8px 0 0}
 .rnota{margin-top:44px;padding:22px 26px;border:1px solid var(--bronze);position:relative;background:rgba(255,252,242,.45)}
@@ -475,6 +496,8 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   #cbtns .hbtn{padding:12px 12px 11px}
   #searchwrap{flex-basis:210px}
   #wordmark .s{display:none}
+  #minimap{display:none}
+  #zoomctl{top:72px;bottom:auto}
 }
 @media (max-width:940px){
   #viewseg,#cbtns,#chrome #searchwrap{display:none}
@@ -488,13 +511,20 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   #chrome{padding-left:66px}
   body.branchmode #chrome{padding-left:calc(16px + env(safe-area-inset-left))}
   #minimap{display:none}
-  #zoomctl{bottom:calc(76px + env(safe-area-inset-bottom))}
+  #zoomctl{top:auto;bottom:calc(76px + env(safe-area-inset-bottom))}
   #legendbox{left:64px}
   #pcontent{padding:20px 20px 70px 24px}
   #phead{padding:20px 56px 0 24px}
   #ptabs{padding-left:20px}
   #coach{gap:10px;padding:12px 16px;bottom:calc(12px + env(safe-area-inset-bottom))}
   #ibox{padding:44px 26px 36px}
+  .source-tools{top:-8px;margin-left:-8px;margin-right:-8px}
+  .source-filter button{min-height:44px}
+  #rnav{padding:9px 10px;gap:6px}
+  #rnav .rnbtn{width:44px;height:44px;flex:0 0 44px;padding:0;font-size:0;letter-spacing:0}
+  #rprev::after{content:'‹';font-size:24px}
+  #rnext::after{content:'›';font-size:24px}
+  #rtoc{flex:1;min-width:0;max-width:none;width:auto}
 }
 @media (prefers-reduced-motion: reduce){
   *{transition-duration:.01ms !important;animation-duration:.01ms !important}
@@ -524,7 +554,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 <header id="chrome">
   <div id="wordmark" title="Volver al inicio del árbol" role="button" tabindex="0">
     <div class="t">FAMILIA <em>ESCOHOTADO</em></div>
-    <div class="s">Mayorazgo de Galapagar · 1685 – 2026</div>
+    <div class="s">Archivo familiar · 1678 – 2026</div>
   </div>
   <div id="viewseg" aria-label="Vista del árbol">
     <button class="segbtn active" data-act="tree" data-sec="tree">Tronco</button>
@@ -537,6 +567,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
       <button class="hbtn" id="infobtn" aria-haspopup="true" aria-expanded="false">Más ▾</button>
       <div id="infodrop" hidden>
         <button data-act="legend">Cómo leer el árbol</button>
+        <button data-act="research">Investigación 2026</button>
         <button data-act="about">Acerca de esta edición</button>
         <button data-act="changelog">Novedades</button>
         <button data-act="contribute">Aportar corrección o documento</button>
@@ -565,6 +596,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   <button class="mitem" data-act="sources">Fuentes <span class="hint">los documentos</span></button>
   <div class="mgrp">INFORMACIÓN</div>
   <button class="mitem" data-act="legend">Cómo leer el árbol</button>
+  <button class="mitem" data-act="research">Investigación 2026</button>
   <button class="mitem" data-act="about">Acerca de esta edición</button>
   <button class="mitem" data-act="changelog">Novedades</button>
   <button class="mitem" data-act="contribute">Aportar corrección</button>
@@ -609,7 +641,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 
 <div id="reader" role="dialog" aria-modal="true" aria-label="La casa de la piedra — lector">
   <div id="rbar">
-    <div><div class="bt">LA CASA DE LA PIEDRA</div><div class="bs">crónica novelada y documentada · 1685 – 2026</div></div>
+    <div><div class="bt">LA CASA DE LA PIEDRA</div><div class="bs">crónica novelada · edición literaria congelada</div></div>
     <button id="rclose" title="Cerrar">✕</button>
   </div>
   <div id="rscroll"><div id="rpage"></div></div>
@@ -631,11 +663,11 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
     <div class="over">MAYORAZGO DE GALAPAGAR</div>
     <h1>Familia <span class="amp">Escohotado</span></h1>
     <div class="sub">Árbol genealógico de una familia — síntesis documental reconciliada</div>
-    <div class="years">MDCLXXXV — MMXXVI</div>
+    <div class="years">MDCLXXVIII — MMXXVI</div>
     <div id="istats"></div>
-    <div class="desc">Una tarde de 2026, Guillermo Guerra descubrió en casa de su abuela, María Teresa Escohotado, el manuscrito del árbol familiar. Con la inteligencia artificial como linterna reconstruyó sus huecos y le dio forma de historia: diez generaciones, de Pablo (h. 1685) a Leo, el miembro más joven documentado. Cada filiación conserva su grado de evidencia, y cada rama, su capítulo en <em>«La casa de la piedra»</em>.</div>
+    <div class="desc">Una tarde de 2026, Guillermo Guerra descubrió en casa de su abuela, María Teresa Escohotado, el manuscrito del árbol familiar. Con la inteligencia artificial como linterna empezó a reconstruir sus huecos y a ordenar su historia. Esta edición amplía aquel legado con una auditoría de archivos, Geneanet y MyHeritage: once generaciones, de Pablo (h. 1678) a Leo, el miembro más joven documentado, siempre distinguiendo hecho, fuente secundaria, tradición e inferencia.</div>
     <button id="enter">ABRIR EL ÁRBOL</button>
-    <div id="iwarn">El tronco anterior a 1843 no está probado por una serie continua de partidas; se conserva porque es el punto de partida que la familia transmitió.</div>
+    <div id="iwarn">El tronco antiguo no está probado por una serie continua de partidas. Los árboles de usuario se incorporan como pistas de nivel C, nunca como documentos primarios.</div>
   </div>
 </div>
 
@@ -645,7 +677,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   <div class="sub">Grabando el árbol…</div>
 </div>
 
-<script src="tree-data.js?v=1.2.1"></script>
+<script src="tree-data.js?v=2.0.0"></script>
 <script src="novel-data.js?v=1.2.1"></script>
 <script>
 'use strict';
@@ -653,6 +685,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 const SVGNS='http://www.w3.org/2000/svg';
 const $=s=>document.querySelector(s);
 const G=GENEALOGY, P=G.people, F=G.families, S=G.sources;
+const GENERATION_COUNT=Object.keys(G.genAnchors||{}).length;
 const ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function el(tag,attrs,parent){const e=document.createElementNS(SVGNS,tag);for(const k in attrs||{})e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
@@ -857,7 +890,7 @@ for(const pid of mainSorted){
 {const c=pos[G.root];const lg=el('g',{class:'annex-el'},nodeLayer);lg.style.setProperty('--d','0.25s');
  laurel(lg,c.x-CW/2-16,c.y-4,false);laurel(lg,c.x+CW/2+16,c.y-4,true);
  const t=el('text',{x:c.x,y:c.y-CH/2-16,'text-anchor':'middle',class:'annexgrp',fill:'var(--wine)'},lg);
- t.textContent='CABEZA DEL ÁRBOL · SEGÚN EL MANUSCRITO';}
+ t.textContent='RAÍZ TRANSMITIDA · RECONSTRUCCIÓN DOCUMENTAL C';}
 
 /* --- gabinete de colaterales --- */
 const treeW=P[G.root]._w;
@@ -953,7 +986,7 @@ const worldBounds=(()=>{
   return{x1:x1-60,y1:y1-140,x2:x2+60,y2:y2+80};
 })();
 const treeBounds={x1:-40,y1:rowY[0]-130,x2:treeW+40,y2:rowY[anchors[anchors.length-1].g]+CH/2+60};
-const KMIN=0.055,KMAX=2.6;
+const KMIN=0.018,KMAX=2.6;
 function clampK(k){return Math.max(KMIN,Math.min(KMAX,k));}
 function applyView(){
   camera.setAttribute('transform',`translate(${view.x},${view.y}) scale(${view.k})`);
@@ -1066,14 +1099,14 @@ addEventListener('resize',()=>{
   else applyView();
 });
 document.addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT')return;
   if(document.querySelector('#reader.open'))return;
   if(e.key==='Escape'){
     // cerrar solo la capa superior: menús → modal → ficha
     if(!$('#mobilemenu').hidden||!$('#infodrop').hidden||!$('#legendpop').hidden){closeMenus();return;}
-    if(document.querySelector('#modal.open'))closeModal();
-    else closePanel();
+    if(document.querySelector('#modal.open')){closeModal();return;}
+    closePanel();
   }
+  if(e.target.tagName==='INPUT')return;
   if(e.key==='+'||e.key==='=')zoomAt(innerWidth/2,innerHeight/2,1.25);
   if(e.key==='-')zoomAt(innerWidth/2,innerHeight/2,0.8);
   if(e.key==='0')fitTree();
@@ -1324,7 +1357,7 @@ function tabFuentes(p){
 function tabNovela(pid){
   const chapKeys=(typeof NOVEL!=='undefined'&&NOVEL.byPerson[pid])||[];
   if(!chapKeys.length)return '<p class="note">No aparece en la novela.</p>';
-  return sec('EN LA NOVELA',`<div class="chips">`+chapKeys.map(k=>{
+  return `<div class="novel-freeze"><strong>EDICIÓN LITERARIA CONGELADA</strong><br>La novela conserva su texto anterior y no incorpora la auditoría Geneanet/MyHeritage del 2 de agosto de 2026. Para los hechos vigentes, consulta Vida, Familia y Fuentes.</div>`+sec('EN LA NOVELA',`<div class="chips">`+chapKeys.map(k=>{
     const s=NOVEL.sections.find(x=>x.key===k);
     return `<button class="rpchip" data-chap="${k}">${esc(s.num)} · ${esc(s.title)}</button>`;
   }).join('')+`</div><div style="font-size:12.5px;font-style:italic;color:var(--ink-3);margin-top:10px">de «La casa de la piedra», crónica novelada de la familia</div>`);
@@ -1359,7 +1392,7 @@ function openPanel(pid){
   wirePanel(phead);
   const pc=$('#pcopy');
   if(pc)pc.addEventListener('click',()=>{
-    const url=location.href.split('#')[0]+'#'+pid.replace(/@/g,'');
+    const url=location.href.split(/[?#]/)[0]+'?persona='+encodeURIComponent(pid.replace(/@/g,''));
     const done=()=>{pc.textContent='✓ Enlace copiado';setTimeout(()=>{if($('#pcopy'))$('#pcopy').textContent='🔗 Copiar enlace';},1800);};
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,()=>prompt('Copia el enlace:',url));
     else prompt('Copia el enlace:',url);
@@ -1397,10 +1430,14 @@ function doSearch(){
   if(!hits.length){sRes.classList.remove('open');return;}
   hits.forEach(hit=>{
     const d=h('div','it',`<span class="n">${esc(hit.p.name)}</span><span class="y">${esc(yearsOf(hit.p))}${hit.p.gen!=null?' · gen. '+ROMAN[hit.p.gen]:' · colateral'}</span>`);
-    d.addEventListener('click',()=>{selectPerson(hit.id);sRes.classList.remove('open');sIn.blur();});
+    d.addEventListener('click',()=>chooseSearchResult(hit.id));
     sRes.appendChild(d);sItems.push({d,id:hit.id});
   });
   sRes.classList.add('open');
+}
+function chooseSearchResult(pid){
+  selectPerson(pid);sRes.classList.remove('open');sIn.blur();
+  if(!$('#mobilemenu').hidden)closeMenus();
 }
 sIn.addEventListener('input',doSearch);
 sIn.addEventListener('focus',doSearch);
@@ -1410,7 +1447,7 @@ sIn.addEventListener('keydown',e=>{
     sAct=(sAct+(e.key==='ArrowDown'?1:-1)+sItems.length)%Math.max(sItems.length,1);
     sItems.forEach((it,i)=>it.d.classList.toggle('act',i===sAct));
   }else if(e.key==='Enter'&&sItems.length){
-    const it=sItems[Math.max(sAct,0)];selectPerson(it.id);sRes.classList.remove('open');sIn.blur();
+    const it=sItems[Math.max(sAct,0)];chooseSearchResult(it.id);
   }else if(e.key==='Escape'){sRes.classList.remove('open');sIn.blur();}
 });
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#searchwrap'))sRes.classList.remove('open');});
@@ -1439,6 +1476,7 @@ function renderChapter(i){
     ${s.key==='preliminar'?'<div class="rlit">MARCO LITERARIO DE ESTA EDICIÓN · LOS HECHOS DOCUMENTADOS, EN LOS CAPÍTULOS</div>':''}
     ${fleuron}
   </div>`;
+  html+=`<div class="novel-freeze"><strong>EDICIÓN LITERARIA CONGELADA</strong><br>Este relato no se ha reescrito con la auditoría Geneanet/MyHeritage del 2 de agosto de 2026. Las fichas y el apartado Fuentes contienen la síntesis genealógica vigente.</div>`;
   html+=s.paras.map((p,j)=>`<p class="rp${j===0?' first':''}">${esc(p)}</p>`).join('');
   if(s.nota){
     html+=`<div class="rnota"><div class="nl">NOTA DOCUMENTAL</div><div class="nt">${esc(s.nota.text)}</div>`+
@@ -1472,8 +1510,9 @@ function closeReader(){
   if(lastFocusReader&&lastFocusReader.focus)try{lastFocusReader.focus()}catch(e){}
 }
 document.addEventListener('keydown',e=>{
-  if(!reader.classList.contains('open')||e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
-  if(e.key==='Escape')closeReader();
+  if(!reader.classList.contains('open'))return;
+  if(e.key==='Escape'){closeReader();return;}
+  if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
   if(e.key==='ArrowLeft')renderChapter(rIdx-1);
   if(e.key==='ArrowRight')renderChapter(rIdx+1);
 });
@@ -1491,6 +1530,7 @@ function openModal(title,html){
   mtitle.textContent=title;mbody.innerHTML=html;
   modal.classList.add('open');
   mbody.scrollTop=0;/* tras .open: si no, el navegador restaura el scroll anterior */
+  wireSourceFilters();
   updateMScroll();
   $('#mclose').focus();
 }
@@ -1518,7 +1558,7 @@ function legendHTML(){
   ${line('gD','Trazo discontinuo — tradición familiar (D).')}
   ${line('gE','Trazo punteado — hipótesis o inferencia (E).')}
   <h3>NAVEGACIÓN</h3>
-  <p>Arrastre el lienzo para desplazarse y use la rueda —o los botones <kbd>+</kbd> <kbd>−</kbd>— para acercarse. Pulse sobre cualquier cartucho para abrir su ficha completa: al hacerlo, la <strong style="color:var(--gA)">línea de sucesión hasta Pablo</strong> se ilumina en oro y el resto del árbol se atenúa. La regla de la izquierda marca los años; los numerales romanos, las diez generaciones. El doble clic acerca; la tecla <kbd>0</kbd> devuelve la vista del tronco completo.</p>
+  <p>Arrastre el lienzo para desplazarse y use la rueda —o los botones <kbd>+</kbd> <kbd>−</kbd>— para acercarse. Pulse sobre cualquier cartucho para abrir su ficha completa: al hacerlo, la <strong style="color:var(--gA)">línea de sucesión hasta Pablo</strong> se ilumina en oro y el resto del árbol se atenúa. La regla de la izquierda marca los años; los numerales romanos, las ${GENERATION_COUNT} generaciones. El doble clic acerca; la tecla <kbd>0</kbd> devuelve la vista del tronco completo.</p>
   <p>En el margen derecho del lienzo, el <em>Gabinete de colaterales</em> reúne a los Escohotado y Greciano documentados en Galapagar sin enlace probado con este tronco.</p>`;
 }
 function aboutHTML(){
@@ -1527,22 +1567,67 @@ function aboutHTML(){
   return `<p class="lead">Esta edición digital nació una tarde de 2026, cuando Guillermo Guerra visitó a su abuela, María Teresa Escohotado, y ella le enseñó el esquema manuscrito del mayorazgo. De su curiosidad —y de la inteligencia artificial que usó como linterna en los archivos— salieron la base de datos genealógica, esta aplicación y la crónica novelada «La casa de la piedra».</p>
   ${paras}
   <h3>LA SÍNTESIS EN CIFRAS</h3>
-  <p>${m.counts.people} personas · ${m.counts.families} unidades familiares · ${m.counts.sources} fuentes documentales · 10 generaciones (1685 – 2026).</p>
+  <p>${m.counts.people} personas · ${m.counts.families} unidades familiares · ${m.counts.sources} fuentes documentales · ${GENERATION_COUNT} generaciones (1678 – 2026).</p>
+  <p>La auditoría de agosto añadió 510 perfiles públicos inventariados en Geneanet y 38 búsquedas dirigidas en una sesión autenticada de MyHeritage. Esos recuentos describen el trabajo de contraste, no 548 pruebas independientes.</p>
   <h3>EDICIÓN Y MÉTODO</h3>
-  <p>Edición digital ${APP_META.version} · ${APP_META.date}. El método cabe en tres reglas: la fuente de mayor calidad prevalece; los conflictos equivalentes se conservan como horquillas; y las filiaciones sin documento puente quedan marcadas expresamente como tradición o hipótesis. La escala A–E acompaña a cada persona, a cada unión y a cada fuente, tanto en las fichas como en los trazos del árbol. Los datos viven en un GEDCOM estándar y la aplicación se regenera desde él: nada se corrige «a mano» sobre el dibujo.</p>
+  <p>Aplicación ${APP_META.version} · datos GEDCOM 4.0 · ${APP_META.date}. El método cabe en tres reglas: la fuente de mayor calidad prevalece; los conflictos equivalentes se conservan sin forzar una falsa certeza; y las filiaciones sin documento puente quedan marcadas expresamente como tradición o hipótesis. La escala A–E acompaña a cada persona, unión y fuente.</p>
+  <p>Los perfiles Geneanet, FamilySearch y MyHeritage son evidencia C aunque coincidan entre sí. Las capturas autenticadas de MyHeritage no se publican: la aplicación sólo contiene la síntesis, la referencia y el límite observado. La novela permanece congelada en su edición literaria anterior y se distingue visualmente de la genealogía vigente.</p>
+  <p><a class="report-link" href="${RESEARCH_REPORT_URL}" target="_blank" rel="noopener">Leer el informe completo de investigación ↗</a></p>
   <p>¿Correcciones, partidas, fotografías o documentos? <a href="mailto:nestor@ncompany.es?subject=Familia%20Escohotado%20·%20corrección%20o%20documento" style="color:var(--wine)">nestor@ncompany.es</a> · el historial de cambios está en «Novedades».</p>
-  <p style="font-style:italic;color:var(--ink-3)">Impulso y relato: Guillermo Guerra Ortiz · Compilación documental: Néstor Guerra Escohotado · síntesis final 3.0 · 28 de julio de 2026.</p>`;
+  <p style="font-style:italic;color:var(--ink-3)">Impulso y relato: Guillermo Guerra Ortiz · Compilación documental: Néstor Guerra Escohotado · integración documental 4.0 · 2 de agosto de 2026.</p>`;
 }
 function sourcesHTML(){
   const list=Object.values(S).sort((a,b)=>+a.id.replace(/\D/g,'')-+b.id.replace(/\D/g,''));
-  return `<p class="lead">Estas ${list.length} fuentes sostienen la síntesis: del esquema manuscrito del mayorazgo a los expedientes del Archivo Histórico Nacional y el Boletín Oficial del Estado. Cada una lleva su sello de calidad.</p>`+
-  list.map(s=>`<div class="src"><div class="st">${sealHTML(s.grade)}<div><div class="tt">${esc(s.title||'')}</div><div class="au">${esc([s.author,s.publication].filter(Boolean).join(' · '))}</div></div></div>${s.text?`<div class="tx">${esc(s.text)}</div>`:''}${s.urls.map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">Ver documento ${s.urls.length>1?j+1:''} ↗</a>`).join('')}</div>`).join('');
+  return `<p class="lead">Estas ${list.length} fuentes sostienen la síntesis: del esquema manuscrito familiar a expedientes, boletines oficiales, índices y árboles genealógicos. El sello A–E indica qué puede afirmarse y qué sigue siendo una pista.</p>
+  <div class="research-card"><div class="eyebrow">AUDITORÍA · 2 DE AGOSTO DE 2026</div><div class="big">510 perfiles de Geneanet y 38 búsquedas autenticadas en MyHeritage, revisados sin importación automática</div><div class="small">Los árboles e índices permanecen en C. Sólo los originales oficiales abiertos y comprobados sostienen hechos A; las filiaciones sin documento puente quedan en E.</div><a href="${RESEARCH_REPORT_URL}" target="_blank" rel="noopener">Abrir expediente completo ↗</a></div>
+  <div class="source-browser">
+    <div class="source-tools"><div class="source-filter" role="group" aria-label="Filtrar fuentes por evidencia">
+      <button class="active" data-grade="all" aria-pressed="true">TODAS</button>${['A','B','C','D','E'].map(g=>`<button data-grade="${g}" aria-pressed="false">${g}</button>`).join('')}
+    </div><input class="source-search" type="search" placeholder="Buscar fuente, archivo o persona…" aria-label="Buscar entre las fuentes"><div class="source-count" aria-live="polite"></div></div>
+    <div class="source-list">${list.map(s=>{const search=norm([s.id,s.title,s.author,s.publication,s.text].filter(Boolean).join(' '));const urls=s.urls||[];return `<div class="src" data-grade="${esc(s.grade||'')}" data-search="${esc(search)}"><div class="st">${sealHTML(s.grade)}<div><div class="tt">${esc(s.title||'')}</div><div class="au">${esc([s.id.replace(/@/g,''),s.author,s.publication].filter(Boolean).join(' · '))}</div></div></div>${s.text?`<div class="tx">${esc(s.text)}</div>`:''}${urls.map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">Ver documento ${urls.length>1?j+1:''} ↗</a>`).join('')}</div>`}).join('')}</div>
+    <div class="source-empty" hidden>No hay fuentes que coincidan con este filtro.</div>
+  </div>`;
+}
+function wireSourceFilters(){
+  const root=mbody.querySelector('.source-browser');
+  if(!root)return;
+  const cards=[...root.querySelectorAll('.source-list .src')];
+  const buttons=[...root.querySelectorAll('.source-filter button[data-grade]')];
+  const input=root.querySelector('.source-search'),count=root.querySelector('.source-count'),empty=root.querySelector('.source-empty');
+  let grade='all';
+  const apply=()=>{
+    const q=norm(input.value.trim());let shown=0;
+    cards.forEach(card=>{const on=(grade==='all'||card.dataset.grade===grade)&&(!q||card.dataset.search.includes(q));card.hidden=!on;if(on)shown++;});
+    count.textContent=`${shown} de ${cards.length} fuentes visibles`;
+    empty.hidden=shown!==0;
+    updateMScroll();
+  };
+  buttons.forEach(button=>button.addEventListener('click',()=>{
+    grade=button.dataset.grade;
+    buttons.forEach(item=>{const on=item===button;item.classList.toggle('active',on);item.setAttribute('aria-pressed',String(on));});
+    apply();
+  }));
+  input.addEventListener('input',apply);apply();
+}
+function researchHTML(){
+  return `<p class="lead">La ampliación de 2026 es una auditoría de pistas, no una importación masiva. Cada incorporación conserva la procedencia, el grado A–E y, cuando existe, el conflicto con el manuscrito o con otra fuente.</p>
+  <div class="research-card"><div class="eyebrow">RESULTADO INTEGRADO</div><div class="big">${G.meta.counts.people} personas · ${G.meta.counts.families} familias · ${G.meta.counts.sources} fuentes</div><div class="small">Base anterior auditada: 90 personas. Contraste: 510 enlaces de perfil en Geneanet, 38 búsquedas dirigidas en MyHeritage y revisión de originales oficiales abiertos.</div></div>
+  <h3>QUÉ SE HA INCORPORADO</h3>
+  <p>Mujeres, cónyuges, hijos y ramas laterales que no figuraban en el manuscrito; fechas y oficios adicionales; una generación candidata entre Pablo y Manuel; la primera familia atribuida a Cástor; y hechos oficiales de Amadeo, Román y María Esperanza. Las fichas muestran la fuente concreta de cada hecho.</p>
+  <h3>QUÉ SIGUE ABIERTO</h3>
+  <p>El tronco antiguo carece aún de una serie continua de partidas. Se conservan separados los registros incompatibles —por ejemplo, Isabel, Nieves/Elvira o María Francisca— y se marcan como E las conexiones que dependen de una deducción. Repetir un dato en varios árboles no lo convierte en fuente primaria.</p>
+  <h3>PRIVACIDAD DEL EXPEDIENTE</h3>
+  <p>Las capturas de la sesión autenticada de MyHeritage se mantienen fuera de la web porque contienen interfaz y datos de cuenta. Aquí se publica únicamente la conclusión verificable, el nivel de evidencia y el enlace general de consulta.</p>
+  <p><a class="report-link" href="${RESEARCH_REPORT_URL}" target="_blank" rel="noopener">Leer la auditoría completa en Markdown ↗</a></p>`;
 }
 /* ================= edición, novedades y exportación ================= */
-const APP_META={version:'1.2',date:'29 de julio de 2026'};
+const APP_META={version:'2.0',date:'2 de agosto de 2026'};
+const RESEARCH_REPORT_URL='https://github.com/nestorguerra/Escohotado/blob/main/investigacion/INFORME_COMPLETO_GENEANET_MYHERITAGE_2026-08-02.md';
 $('#verline').textContent='edición '+APP_META.version+' · '+APP_META.date;
 function changelogHTML(){
   return `<p class="lead">Registro de cambios de esta edición digital.</p>
+  <h3>VERSIÓN 2.0 · 2 DE AGOSTO DE 2026</h3>
+  <p>Integración conservadora de la auditoría Geneanet/MyHeritage: 192 personas, 47 familias y 71 fuentes · nuevas mujeres, matrimonios, hijos, ramas, fechas y oficios · hechos oficiales comprobados diferenciados de árboles e índices · fuentes con búsqueda y filtro A–E · apartado «Investigación 2026» y expediente completo enlazado. La novela no se ha reescrito y aparece señalada como edición literaria congelada.</p>
   <h3>VERSIÓN 1.2 · 29 DE JULIO DE 2026</h3>
   <p>Se incorpora Patty Lin, esposa de Aday Guerra Escohotado, por testimonio familiar directo (evidencia D) y su perfil profesional como fuente (S45) · corregido el cierre de la guía de tres pasos.</p>
   <h3>VERSIÓN 1.1 · 29 DE JULIO DE 2026</h3>
@@ -1667,6 +1752,7 @@ function handleAct(a){
   else if(a==='novel')openReader(0);
   else if(a==='sources')openModal('Fuentes documentales',sourcesHTML());
   else if(a==='legend')openModal('Cómo leer el árbol',legendHTML());
+  else if(a==='research')openModal('Investigación 2026',researchHTML());
   else if(a==='about')openModal('Acerca de esta edición',aboutHTML());
   else if(a==='changelog')openModal('Novedades',changelogHTML());
   else if(a==='contribute')location.href='mailto:nestor@ncompany.es?subject='+encodeURIComponent('Familia Escohotado · corrección o documento')+'&body='+encodeURIComponent('Persona o rama afectada:\n\nCorrección o documento que aporto:\n');
@@ -1697,7 +1783,7 @@ $('#wordmark').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e
 /* ================= intro / loader / crecimiento ================= */
 const m=G.meta;
 $('#istats').innerHTML=[
-  [m.counts.people,'PERSONAS'],[10,'GENERACIONES'],[m.counts.families,'FAMILIAS'],[m.counts.sources,'FUENTES']
+  [m.counts.people,'PERSONAS'],[GENERATION_COUNT,'GENERACIONES'],[m.counts.families,'FAMILIAS'],[m.counts.sources,'FUENTES']
 ].map(([v,k])=>`<div class="st"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
 
 if(!reduced)world.classList.add('grow');
@@ -1711,8 +1797,9 @@ Promise.all([document.fonts?document.fonts.ready:Promise.resolve(),new Promise(r
   intro.style.visibility='visible';intro.classList.remove('hide');
 });
 $('#enter').addEventListener('click',()=>{
-  // capturar el enlace profundo ANTES de que closePanel/renderBranch toquen el hash
-  const hash=location.hash.replace('#','');
+  // Sólo una URL compartida explícita abre persona; el #hash transitorio nunca
+  // debe reabrir una ficha al recargar y pulsar «Abrir el árbol».
+  const linked=new URLSearchParams(location.search).get('persona');
   // estado limpio garantizado: nada heredado puede abrir novela, modal o ficha
   closeReader();closeModal();closePanel();closeMenus();
   intro.classList.add('hide');
@@ -1728,8 +1815,8 @@ $('#enter').addEventListener('click',()=>{
     },reduced?0:4200);
   }));
   showCoach();
-  // enlace profundo (#I45 abre la ficha de esa persona)
-  if(hash){const pid='@'+hash+'@';if(P[pid])setTimeout(()=>selectPerson(pid),reduced?100:1500);}
+  // enlace permanente (?persona=I45 abre la ficha tras entrar)
+  if(linked){const pid='@'+linked.replace(/@/g,'')+'@';if(P[pid])setTimeout(()=>selectPerson(pid),reduced?100:1500);}
 });
 
 applyView();

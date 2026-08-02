@@ -1,8 +1,12 @@
 .claude/
 .DS_Store
-arbol.ged
+*.ged
 build-*.js
 data.json
 novela-layout.txt
 novela.txt
 parse.js
+
+# Expediente de trabajo local: las capturas autenticadas no se publican.
+investigacion/*
+!investigacion/INFORME_COMPLETO_GENEANET_MYHERITAGE_2026-08-02.md
