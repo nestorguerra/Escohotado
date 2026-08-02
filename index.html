@@ -415,9 +415,9 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 .rhead .rctx{font-family:var(--caps);font-size:13px;letter-spacing:.26em;color:var(--bronze);margin-top:14px}
 .rhead .rlit{font-family:var(--caps);font-size:10px;letter-spacing:.2em;color:var(--gA);margin-top:12px}
 .rhead svg{margin-top:18px;width:150px;height:14px}
-.novel-freeze{margin:0 0 30px;padding:12px 15px;border-left:2px solid var(--wine);background:rgba(103,43,36,.055);
+.novel-edition{margin:0 0 30px;padding:12px 15px;border-left:2px solid var(--gold);background:rgba(151,111,48,.065);
   font-size:13px;line-height:1.55;color:var(--ink-2)}
-.novel-freeze strong{font-family:var(--caps);font-weight:400;font-size:10.5px;letter-spacing:.13em;color:var(--wine)}
+.novel-edition strong{font-family:var(--caps);font-weight:400;font-size:10.5px;letter-spacing:.13em;color:var(--wine)}
 .rp{font-size:17.5px;line-height:1.74;color:var(--ink-2);margin-bottom:17px;text-align:justify;hyphens:auto}
 .rp.first::first-letter{font-family:var(--display);font-size:340%;line-height:.78;color:var(--wine);float:left;padding:6px 8px 0 0}
 .rnota{margin-top:44px;padding:22px 26px;border:1px solid var(--bronze);position:relative;background:rgba(255,252,242,.45)}
@@ -508,7 +508,10 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 #mobilemenu #search{padding:13px 14px 12px}
 @media (max-width:640px){
   #ruler{width:56px}
-  #chrome{padding-left:66px}
+  #chrome{padding-left:66px;padding-right:10px;gap:8px}
+  #wordmark{flex:1 1 auto;min-width:0}
+  #wordmark .t{font-size:clamp(14px,4.35vw,17px);letter-spacing:.12em;white-space:nowrap}
+  #mmenubtn{flex:0 0 46px;min-width:46px}
   body.branchmode #chrome{padding-left:calc(16px + env(safe-area-inset-left))}
   #minimap{display:none}
   #zoomctl{top:auto;bottom:calc(76px + env(safe-area-inset-bottom))}
@@ -641,7 +644,7 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
 
 <div id="reader" role="dialog" aria-modal="true" aria-label="La casa de la piedra — lector">
   <div id="rbar">
-    <div><div class="bt">LA CASA DE LA PIEDRA</div><div class="bs">crónica novelada · edición literaria congelada</div></div>
+    <div><div class="bt">LA CASA DE LA PIEDRA</div><div class="bs">crónica novelada y documentada · edición 2.1</div></div>
     <button id="rclose" title="Cerrar">✕</button>
   </div>
   <div id="rscroll"><div id="rpage"></div></div>
@@ -677,8 +680,8 @@ kbd{font-family:var(--caps);font-size:12px;border:1px solid var(--bronze);border
   <div class="sub">Grabando el árbol…</div>
 </div>
 
-<script src="tree-data.js?v=2.0.0"></script>
-<script src="novel-data.js?v=1.2.1"></script>
+<script src="tree-data.js?v=2.1.0"></script>
+<script src="novel-data.js?v=2.1.0"></script>
 <script>
 'use strict';
 /* ================= utilidades ================= */
@@ -1357,7 +1360,7 @@ function tabFuentes(p){
 function tabNovela(pid){
   const chapKeys=(typeof NOVEL!=='undefined'&&NOVEL.byPerson[pid])||[];
   if(!chapKeys.length)return '<p class="note">No aparece en la novela.</p>';
-  return `<div class="novel-freeze"><strong>EDICIÓN LITERARIA CONGELADA</strong><br>La novela conserva su texto anterior y no incorpora la auditoría Geneanet/MyHeritage del 2 de agosto de 2026. Para los hechos vigentes, consulta Vida, Familia y Fuentes.</div>`+sec('EN LA NOVELA',`<div class="chips">`+chapKeys.map(k=>{
+  return `<div class="novel-edition"><strong>EDICIÓN LITERARIA 2.1</strong><br>La novela ya incorpora la genealogía 4.0 y distingue en sus notas el documento, la fuente secundaria, la tradición familiar y la inferencia.</div>`+sec('EN LA NOVELA',`<div class="chips">`+chapKeys.map(k=>{
     const s=NOVEL.sections.find(x=>x.key===k);
     return `<button class="rpchip" data-chap="${k}">${esc(s.num)} · ${esc(s.title)}</button>`;
   }).join('')+`</div><div style="font-size:12.5px;font-style:italic;color:var(--ink-3);margin-top:10px">de «La casa de la piedra», crónica novelada de la familia</div>`);
@@ -1476,7 +1479,7 @@ function renderChapter(i){
     ${s.key==='preliminar'?'<div class="rlit">MARCO LITERARIO DE ESTA EDICIÓN · LOS HECHOS DOCUMENTADOS, EN LOS CAPÍTULOS</div>':''}
     ${fleuron}
   </div>`;
-  html+=`<div class="novel-freeze"><strong>EDICIÓN LITERARIA CONGELADA</strong><br>Este relato no se ha reescrito con la auditoría Geneanet/MyHeritage del 2 de agosto de 2026. Las fichas y el apartado Fuentes contienen la síntesis genealógica vigente.</div>`;
+  html+=`<div class="novel-edition"><strong>EDICIÓN LITERARIA 2.1</strong><br>Relato revisado con la genealogía 4.0. La nota documental de cada capítulo indica qué está probado y qué continúa como fuente secundaria, tradición o hipótesis.</div>`;
   html+=s.paras.map((p,j)=>`<p class="rp${j===0?' first':''}">${esc(p)}</p>`).join('');
   if(s.nota){
     html+=`<div class="rnota"><div class="nl">NOTA DOCUMENTAL</div><div class="nt">${esc(s.nota.text)}</div>`+
@@ -1502,12 +1505,16 @@ function openReader(key){
   lastFocusReader=document.activeElement;
   renderChapter(i);
   reader.classList.add('open');
+  $('#rscroll').scrollTop=0;
+  requestAnimationFrame(()=>{$('#rscroll').scrollTop=0;});
   $('#rclose').focus();
 }
 function closeReader(){
   if(!reader.classList.contains('open'))return;
   reader.classList.remove('open');
-  if(lastFocusReader&&lastFocusReader.focus)try{lastFocusReader.focus()}catch(e){}
+  const restore=lastFocusReader&&lastFocusReader.isConnected&&lastFocusReader.getClientRects().length
+    ?lastFocusReader:(innerWidth<=940?$('#mmenubtn'):$('#cbtns [data-act="novel"]'));
+  if(restore&&restore.focus)try{restore.focus()}catch(e){}
 }
 document.addEventListener('keydown',e=>{
   if(!reader.classList.contains('open'))return;
@@ -1571,7 +1578,7 @@ function aboutHTML(){
   <p>La auditoría de agosto añadió 510 perfiles públicos inventariados en Geneanet y 38 búsquedas dirigidas en una sesión autenticada de MyHeritage. Esos recuentos describen el trabajo de contraste, no 548 pruebas independientes.</p>
   <h3>EDICIÓN Y MÉTODO</h3>
   <p>Aplicación ${APP_META.version} · datos GEDCOM 4.0 · ${APP_META.date}. El método cabe en tres reglas: la fuente de mayor calidad prevalece; los conflictos equivalentes se conservan sin forzar una falsa certeza; y las filiaciones sin documento puente quedan marcadas expresamente como tradición o hipótesis. La escala A–E acompaña a cada persona, unión y fuente.</p>
-  <p>Los perfiles Geneanet, FamilySearch y MyHeritage son evidencia C aunque coincidan entre sí. Las capturas autenticadas de MyHeritage no se publican: la aplicación sólo contiene la síntesis, la referencia y el límite observado. La novela permanece congelada en su edición literaria anterior y se distingue visualmente de la genealogía vigente.</p>
+  <p>Los perfiles Geneanet, FamilySearch y MyHeritage son evidencia C aunque coincidan entre sí. Las capturas autenticadas de MyHeritage no se publican: la aplicación sólo contiene la síntesis, la referencia y el límite observado. La novela 2.1 incorpora esta genealogía y separa visualmente el marco literario de sus notas documentales.</p>
   <p><a class="report-link" href="${RESEARCH_REPORT_URL}" target="_blank" rel="noopener">Leer el informe completo de investigación ↗</a></p>
   <p>¿Correcciones, partidas, fotografías o documentos? <a href="mailto:nestor@ncompany.es?subject=Familia%20Escohotado%20·%20corrección%20o%20documento" style="color:var(--wine)">nestor@ncompany.es</a> · el historial de cambios está en «Novedades».</p>
   <p style="font-style:italic;color:var(--ink-3)">Impulso y relato: Guillermo Guerra Ortiz · Compilación documental: Néstor Guerra Escohotado · integración documental 4.0 · 2 de agosto de 2026.</p>`;
@@ -1621,13 +1628,15 @@ function researchHTML(){
   <p><a class="report-link" href="${RESEARCH_REPORT_URL}" target="_blank" rel="noopener">Leer la auditoría completa en Markdown ↗</a></p>`;
 }
 /* ================= edición, novedades y exportación ================= */
-const APP_META={version:'2.0',date:'2 de agosto de 2026'};
+const APP_META={version:'2.1',date:'2 de agosto de 2026'};
 const RESEARCH_REPORT_URL='https://github.com/nestorguerra/Escohotado/blob/main/investigacion/INFORME_COMPLETO_GENEANET_MYHERITAGE_2026-08-02.md';
 $('#verline').textContent='edición '+APP_META.version+' · '+APP_META.date;
 function changelogHTML(){
   return `<p class="lead">Registro de cambios de esta edición digital.</p>
+  <h3>VERSIÓN 2.1 · 2 DE AGOSTO DE 2026</h3>
+  <p>Nueva edición de «La casa de la piedra»: Guillermo pasa a ser el desencadenante claro del relato; se reescriben el arranque Pablo–Gregorio–Manuel y las dos familias de Cástor; se corrigen Maruja, Elvira y María Francisca; se incorpora Patty Lin; se añade «Las ramas que regresaron» para las mujeres y descendencias recuperadas; y todas las notas documentales quedan alineadas con las 71 fuentes de la genealogía 4.0.</p>
   <h3>VERSIÓN 2.0 · 2 DE AGOSTO DE 2026</h3>
-  <p>Integración conservadora de la auditoría Geneanet/MyHeritage: 192 personas, 47 familias y 71 fuentes · nuevas mujeres, matrimonios, hijos, ramas, fechas y oficios · hechos oficiales comprobados diferenciados de árboles e índices · fuentes con búsqueda y filtro A–E · apartado «Investigación 2026» y expediente completo enlazado. La novela no se ha reescrito y aparece señalada como edición literaria congelada.</p>
+  <p>Integración conservadora de la auditoría Geneanet/MyHeritage: 192 personas, 47 familias y 71 fuentes · nuevas mujeres, matrimonios, hijos, ramas, fechas y oficios · hechos oficiales comprobados diferenciados de árboles e índices · fuentes con búsqueda y filtro A–E · apartado «Investigación 2026» y expediente completo enlazado. En esta versión la novela conservó temporalmente su edición anterior hasta la revisión 2.1.</p>
   <h3>VERSIÓN 1.2 · 29 DE JULIO DE 2026</h3>
   <p>Se incorpora Patty Lin, esposa de Aday Guerra Escohotado, por testimonio familiar directo (evidencia D) y su perfil profesional como fuente (S45) · corregido el cierre de la guía de tres pasos.</p>
   <h3>VERSIÓN 1.1 · 29 DE JULIO DE 2026</h3>

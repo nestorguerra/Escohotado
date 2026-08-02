@@ -2,9 +2,9 @@
 
 **Fecha de revisión:** 2 de agosto de 2026 · segunda pasada autenticada
 **Objeto:** contraste completo de la base previa de 90 personas con las dos plataformas indicadas.
-**Estado:** informe de investigación integrado selectivamente en el GEDCOM 4.0 y la aplicación 2.0; **la novela no se ha reescrito**.
+**Estado:** informe de investigación integrado selectivamente en el GEDCOM 4.0, la aplicación 2.1 y la edición literaria 2.1 de «La casa de la piedra».
 
-> **Nota de versión.** Este expediente audita la base de 90 personas anterior a la integración. La aplicación posterior contiene 192 personas, 47 familias y 71 fuentes clasificadas; por eso varias expresiones como «árbol vigente» o «persona ausente» describen el punto de partida, no el resultado ya publicado.
+> **Nota de versión.** Este expediente audita la base de 90 personas anterior a la integración. La aplicación posterior contiene 192 personas, 47 familias y 71 fuentes clasificadas, y la novela 2.1 reelabora sus pasajes genealógicos con esa base. Por eso varias expresiones como «árbol vigente» o «persona ausente» describen el punto de partida, no el resultado ya publicado.
 
 > **Dictamen corto.** Hay una reconstrucción online mucho más rica entre Pablo y Cástor, además de matrimonios, mujeres y ramas laterales ausentes en la base previa. La genealogía antigua sigue siendo sobre todo evidencia **C (árboles/índices)** y contiene conflictos; no es una colección de partidas comprobadas. La segunda pasada sí aporta hechos **A** para Amadeo, Román y María Esperanza al contrastar directamente el BOE. La integración se hizo registro a registro, nunca en bloque.
 
